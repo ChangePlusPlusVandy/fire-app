@@ -139,6 +139,7 @@ module.exports = (app) => {
         first_name: Joi.string().allow(""),
         last_name: Joi.string().allow(""),
         city: Joi.string().allow(""),
+        primary_email: Joi.string().allow(""),
       });
       data = schema.validateAsync(req.body);
     } catch (err) {

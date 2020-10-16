@@ -64,10 +64,11 @@ const getCurrentScheduleDuration = async (api_key, id) => {
       }
     );
     const schedule = await res.json();
-    const duration = schedule !== {} ? schedule.duration : 0;
-    const is_watering =
-      duration === 0 || schedule.status === "PAUSED" ? false : true;
-    return { duration, is_watering };
+    console.log("schedule");
+    console.log(schedule);
+    const duration = schedule?.duration;
+
+    return { duration: duration };
   } catch (err) {
     console.log(err);
   }
@@ -89,7 +90,6 @@ const concurrentGetDeviceDataAndSchedule = async (devices) => {
             Object.assign(device.toObject(), {
               status: status.status,
               duration: schedule.duration,
-              is_watering: schedule.is_watering,
             })
           );
         } catch (err) {
@@ -128,7 +128,6 @@ const startAllZones = async (api_key, id, device) => {
         },
       }
     );
-    console.log(res);
   } catch (err) {
     console.log(err);
   }

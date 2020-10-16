@@ -88,7 +88,11 @@ const MyApp = () => {
           path="/login"
           render={(p) =>
             loggedIn() ? (
-              <Redirect to={`/profile/${state.username}`} />
+              !isFireChief() ? (
+                <Redirect to={`/sprinkler-register`} />
+              ) : (
+                <Redirect to={`/profile/${state.username}`} />
+              )
             ) : (
               <Login {...p} logIn={logIn} />
             )
@@ -165,6 +169,7 @@ const MyApp = () => {
             );
           }}
         />
+        <Route path="/edit" render={(p) => <EditProfile {...p} />} />
       </GridBase>
     </BrowserRouter>
   );

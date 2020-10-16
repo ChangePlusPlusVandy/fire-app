@@ -92,6 +92,14 @@ export const FormButton = styled.button`
   font-size: 0.8em;
 `;
 
+export const TableButton = styled.button`
+  background: #6495ed;
+  border: none;
+  border-radius: 5px;
+  line-height: 2em;
+  font-size: 0.8em;
+`;
+
 export const ApiRegisterButton = styled.button`
   padding-left: 40px;
   max-width: 200px;

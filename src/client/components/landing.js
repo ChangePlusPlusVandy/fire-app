@@ -13,5 +13,6 @@ export const Landing = () => (
   <LandingBase>
     <h1>Welcome</h1>
     <p>Login or register to get started</p>
+    <div style={{ gridArea: "ft" }}>Built by Change++</div>
   </LandingBase>
 );

@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormButton,
   ModalNotify,
+  FormSelect,
 } from "./shared";
 import PropTypes from "prop-types";
 import { Register } from "./register";
@@ -17,6 +18,7 @@ export const EditProfile = ({ history }) => {
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
   let [city, setCity] = useState("");
+  const [primaryEmail, setPrimaryEmail] = useState("");
   let [error, setError] = useState("");
   let [notify, setNotify] = useState("");
 
@@ -31,6 +33,10 @@ export const EditProfile = ({ history }) => {
     }
     if (city) {
       state["city"] = city;
+    }
+
+    if (primaryEmail) {
+      state["primary_email"] = primaryEmail;
     }
 
     const res = await fetch("/v1/user", {
@@ -78,11 +84,26 @@ export const EditProfile = ({ history }) => {
         />
 
         <FormLabel htmlFor="city">City:</FormLabel>
-        <FormInput
+        <FormSelect
           id="city"
           name="city"
-          placeholder="City"
           onChange={(ev) => setCity(ev.target.value)}
+        >
+          <option>Nashville</option>
+          <option>Berkley</option>
+          <option>Moraga</option>
+          <option>West Chester</option>
+          <option>NYC</option>
+        </FormSelect>
+
+        <FormLabel htmlFor="primary_email">Email:</FormLabel>
+        <FormInput
+          id="primary_email"
+          name="primary_email"
+          type="email"
+          placeholder="Email Address"
+          onChange={(ev) => setPrimaryEmail(ev.target.value)}
+          value={primaryEmail}
         />
 
         <div />

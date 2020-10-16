@@ -130,7 +130,7 @@ export const Profile = (props) => {
         {isUser && isFireChief ? (
           <DeviceList username={state.username} />
         ) : (
-          <p>Not FireChief</p>
+          <div></div>
         )}
       </ProfileBase>
     </Fragment>

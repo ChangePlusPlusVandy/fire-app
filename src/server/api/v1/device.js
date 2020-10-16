@@ -45,7 +45,7 @@ module.exports = (app) => {
 
     // get the person id
     try {
-      const data = await getPersonId(data.api_key);
+      const person_id = await getPersonId(data.api_key);
       data["person_id"] = person_id.id;
     } catch (err) {
       console.log(err);
@@ -129,60 +129,14 @@ module.exports = (app) => {
   });
 
   /**
-   * Returns inforomation for a single device
-   * @param {req.params.id} ID for the device to get info about
-   * @param {req.body.api_key} Key to access device api
-   * @return {201, {devices}} Returns {is_watering, schedule, status}
-   */
-  app.get("/v1/devices/:id", async (req, res) => {
-    // get if device is online
-    let status = "";
-    try {
-      const data = await getDeviceDataStatus(req.body.api_key, req.params.id);
-      status = data.status;
-    } catch (err) {
-      console.log(err.message);
-      res
-        .status(400)
-        .send({ error: `Error getting device information: ${err.message}` });
-    }
-    // get if schedule is running
-    let schedule = {};
-    let is_watering = true;
-    try {
-      const data = await getCurrentSchedule(req.body.api_key, req.params.id);
-
-      //no schedule running
-      if (!data) {
-        is_watering = false;
-      } else {
-        schedule = {
-          duration: data.duration,
-        };
-      }
-      // Send the happy response back
-      res.status(201).send({
-        status,
-        is_watering,
-        schedule,
-      });
-    } catch (err) {
-      console.log(err.message);
-      res
-        .status(400)
-        .send({ error: `Error getting schedule information: ${err.message}` });
-    }
-  });
-
-  /**
    * Starts a 24 hour sprinkler cycle for a device
    * @param {req.params.id} ID for the device to get info about
    * @param {req.body.device} Device values
    * @return {201, {devices}} Returns updated device
    */
   app.put("/v1/devices/start/:id", async (req, res) => {
+    console.log("start");
     // get if device is online
-
     try {
       await startAllZones(
         req.body.device.api_key,

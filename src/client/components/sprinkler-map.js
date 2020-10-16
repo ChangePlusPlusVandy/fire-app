@@ -48,7 +48,7 @@ const Map = ({ devices }) => {
             />
           </svg>
         );
-        const color = device.is_watering ? "blue" : "red";
+        const color = device.duration > 0 ? "blue" : "red";
         new mapboxgl.Marker({ color }).setLngLat(coords).addTo(map);
 
         bounds.extend(coords);

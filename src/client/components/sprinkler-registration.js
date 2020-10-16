@@ -62,7 +62,7 @@ const SprinklerRegister = ({ history, owner, city, lat, lng }) => {
   };
 
   const onAccept = () => {
-    history.push("/profile");
+    history.push(`/profile/${state.owner}`);
   };
 
   return (

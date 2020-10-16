@@ -6,9 +6,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SprinklerMap from "./sprinkler-map";
-import { FormButton } from "./shared";
+import { FormButton, TableButton } from "./shared";
 
 const SprinklerHub = ({ username, device, onWaterClick }) => {
+  console.log(device.status);
   return (
     <tr>
       <td>{device.name}</td>
@@ -17,8 +18,12 @@ const SprinklerHub = ({ username, device, onWaterClick }) => {
       <td>
         {device.status === "" ? "" : device.status === "ONLINE" ? "🌐" : "👎"}
       </td>
-      <td onClick={() => onWaterClick(device)}>
-        {device.is_watering === "" ? "" : device.is_watering ? "💦" : "❌"}
+      <td>
+        {device.duration && device.status === "ONLINE" ? (
+          "💦"
+        ) : (
+          <TableButton onClick={() => onWaterClick(device)}> Start</TableButton>
+        )}
       </td>
     </tr>
   );
@@ -114,14 +119,13 @@ const DeviceList = (props) => {
       .then((data) => {
         console.log(data.devices);
         setState({ devices: data.devices });
+        setIsLoaded(true);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    fetchDevices().then(() => {
-      setIsLoaded(true);
-    });
+    fetchDevices().then(() => {});
   }, [props]);
 
   if (isLoaded) {
@@ -164,7 +168,7 @@ const DeviceList = (props) => {
       </Fragment>
     );
   } else {
-    return <p>Have community members register sprinkler hubs to get started</p>;
+    return <p></p>;
   }
 };
 

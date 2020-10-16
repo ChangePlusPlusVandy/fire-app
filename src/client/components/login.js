@@ -37,10 +37,6 @@ export const Login = (props) => {
     }
   };
 
-  const onGithubLogin = async (ev) => {
-    window.location.href = "/github/login";
-  };
-
   useEffect(() => {
     document.getElementById("username").focus();
   }, []);
