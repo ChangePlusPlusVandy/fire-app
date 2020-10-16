@@ -5,3 +5,5 @@ Before running create start MongoDB instance running at mongodb://localhost:3276
 ```
 npm start
 ```
+
+Visit http://localhost:8080
