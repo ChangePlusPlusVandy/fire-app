@@ -14,6 +14,12 @@ const envConfig = require("simple-env-config");
 
 const env = process.env.NODE_ENV ? process.env.NODE_ENV : "dev";
 
+const keyPath = path.join(__dirname, "../../server.key");
+const crtPath = path.join(__dirname, "../../server.crt");
+let options = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(crtPath),
+};
 /**********************************************************************************************************/
 
 const setupServer = async () => {
@@ -85,10 +91,22 @@ const setupServer = async () => {
     });
   });
 
-  // Run the server itself
-  let server = app.listen(port, () => {
-    console.log(`Assignment 5 ${env} listening on: ${server.address().port}`);
-  });
+    // Listen for HTTPS requests
+let server = https.createServer(options, app).listen(8443, () => {
+  console.log(`Secure Server listening on: ${server.address().port}`);
+});
+// Redirect HTTP to HTTPS
+http
+  .createServer((req, res) => {
+    console.log("Here");
+    const location = `https://localhost:8443/${req.url}`;
+    console.log(`Redirect to: ${location}`);
+    res.writeHead(302, { Location: location });
+    res.end();
+  })
+  .listen(8080, () => {
+    console.log(`Server listening on 8080 for HTTPS redirect`);
+  }); 
 };
 
 /**********************************************************************************************************/
