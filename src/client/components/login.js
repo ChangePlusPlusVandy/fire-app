@@ -65,6 +65,8 @@ export const Login = (props) => {
           onChange={(ev) => setPass(ev.target.value)}
         />
         <div />
+        <button>Login with Google</button>
+        <div />
         <FormButton id="submitBtn" onClick={onSubmit}>
           Login
         </FormButton>

@@ -42,7 +42,7 @@ const getDeviceDataStatus = async (api_key, id) => {
     });
     const device = await res.json();
 
-    return { status: device?.status };
+    return { status: device.status };
   } catch (err) {
     console.log(err);
   }
@@ -66,7 +66,7 @@ const getCurrentScheduleDuration = async (api_key, id) => {
     const schedule = await res.json();
     console.log("schedule");
     console.log(schedule);
-    const duration = schedule?.duration;
+    const duration = schedule.duration;
 
     return { duration: duration };
   } catch (err) {

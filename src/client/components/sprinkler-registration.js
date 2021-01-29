@@ -20,6 +20,7 @@ const SprinklerRegister = ({ history, owner, city, lat, lng }) => {
     lat,
     lng,
     api_key: "",
+    userAuthorized: false,
   });
   let [error, setError] = useState("");
   let [notify, setNotify] = useState("");
@@ -37,13 +38,36 @@ const SprinklerRegister = ({ history, owner, city, lat, lng }) => {
     });
   };
 
+  const onUpdateAuthorization = (ev) => {
+
+    if(ev.target.checked) {
+      setState({
+        ...state,
+        userAuthorized: true
+      });
+      setError("");
+    } else {
+      setState({
+        ...state,
+        userAuthorized: false
+      });
+      setError("Please agree to condition statement.");
+    }
+  }
+
   const onSubmit = async (ev) => {
     ev.preventDefault();
     // Only proceed if there are no errors
-    if (error !== "") return;
+    if (error !== "" || !state.userAuthorized) return;
     const res = await fetch("/v1/device", {
       method: "POST",
-      body: JSON.stringify(state),
+      body: JSON.stringify({
+        owner: state.owner,
+        city: state.city,
+        lat: state.lat,
+        lng: state.lng,
+        api_key: state.api_key
+      }),
       credentials: "include",
       headers: {
         "content-type": "application/json",
@@ -81,6 +105,15 @@ const SprinklerRegister = ({ history, owner, city, lat, lng }) => {
           onChange={onChange}
           value={state.api_key}
         />
+        <FormLabel>Consent Agreement:</FormLabel>
+        <div id="authorizationContainer">
+          <p id="authorizationAgreement">
+            Do you agree to relinquish sprinkler control to firefighters in your area?
+            This access is limited to your fire chief.
+          </p>
+          <input onChange={onUpdateAuthorization} type="checkbox" id="authorizationSelection"></input>
+            <label for="authorizationSelection">I agree to these terms.</label>
+        </div>
         <div />
         <FormButton id="submitBtn" onClick={onSubmit}>
           Register
