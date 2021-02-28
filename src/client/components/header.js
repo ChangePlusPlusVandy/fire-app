@@ -85,7 +85,7 @@ const HeaderRight = ({ user, email }) => {
             Log In
           </Link>
           <Link id="regLink" to="/register">
-            Register
+            Chief Mode
           </Link>
         </Fragment>
       )}

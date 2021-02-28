@@ -11,6 +11,12 @@ import {
   FormButton,
 } from "./shared";
 
+/*const FormContainer = styled.div`
+  width: 100%;
+  height: 60px;
+  background-color: blue;
+`;*/
+
 export const Login = (props) => {
   let [username, setUser] = useState("");
   let [password, setPass] = useState("");
@@ -42,6 +48,9 @@ export const Login = (props) => {
   }, []);
 
   return (
+    /*<FormContainer>
+      This is test text.
+    </FormContainer>*/
     <div style={{ gridArea: "main" }}>
       <ErrorMessage msg={error} />
       <FormBase>
