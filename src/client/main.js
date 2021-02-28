@@ -10,10 +10,14 @@ import { Landing } from "./components/landing";
 import { Login } from "./components/login";
 import { Logout } from "./components/logout";
 import { Register } from "./components/register";
+import {OwnerRegister} from "./components/owner-register";
+import {OwnerUpdate} from "./components/owner-update";
 import { Profile } from "./components/profile";
 import { EditProfile } from "./components/editprofile";
 import SprinklerRegister from "./components/sprinkler-registration";
 import SprinklerMap from "./components/sprinkler-map";
+import {ChiefRegister} from "./components/chief-register";
+import {Hubs} from "./components/hubs";
 //import SprinklerMangement from "./components/sprinkler-management";
 //import SprinklerMap from "./components/sprinkler-map";
 
@@ -25,7 +29,7 @@ const defaultUser = {
   city: "",
 };
 
-const GridBase = styled.div`
+/*const GridBase = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;
@@ -42,6 +46,14 @@ const GridBase = styled.div`
       "sb sb main main main"
       "ft ft ft ft ft";
   }
+`;*/
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: Helvetica;
 `;
 
 const MyApp = () => {
@@ -80,8 +92,8 @@ const MyApp = () => {
 
   return (
     <BrowserRouter>
-      <GridBase>
-        <Header user={state.username} email={state.primary_email} />
+      <MainContainer>
+        {/*<Header user={state.username} email={state.primary_email} />*/}
         {/*Shared access pages*/}
         <Route exact path="/" component={Landing} />
         <Route
@@ -103,14 +115,31 @@ const MyApp = () => {
           render={(p) => <Logout {...p} logOut={logOut} />}
         />
         <Route
-          path="/register"
+          path="/owner-register"
           render={(p) => {
             return loggedIn() ? (
               <Redirect to={`/profile/${state.username}`} />
             ) : (
-              <Register {...p} />
+              <OwnerRegister {...p} />
             );
           }}
+        />
+
+        <Route
+          path="/owner-update"
+          component={OwnerUpdate}
+        />
+        <Route
+          path="/register"
+          component={Register}
+        />
+        <Route
+            path="/chief-register"
+            component={ChiefRegister}
+        />
+        <Route
+            path="/hubs"
+            component={Hubs}
         />
         <Route
           path="/profile/:username"
@@ -170,7 +199,7 @@ const MyApp = () => {
           }}
         />
         <Route path="/edit" render={(p) => <EditProfile {...p} />} />
-      </GridBase>
+      </MainContainer>
     </BrowserRouter>
   );
 };

@@ -99,6 +99,116 @@ export const TableButton = styled.button`
   line-height: 2em;
   font-size: 0.8em;
 `;
+/************* ALEX'S NEW */
+export const TitleLine = styled.h1`
+  color: #CB0000;
+  font-size: 56px;
+  text-align: center;
+  font-style: italic;
+`;
+
+export const FreeButton = styled.p`
+  padding: 14px 18px 14px 18px;
+  cursor: pointer;
+  border-radius: 15px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0px 3px 6px #00000029;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow:none;
+  }
+`;
+
+// owner-register.js
+export const OwnerRegisterContainer = styled.div`
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > input {
+        width: 64%;
+        height: 40px;
+        padding-left: 16px;
+        border: solid 1px #707070;
+        border-radius: 15px;
+        margin-bottom: 12px;
+        font-family: Helvetica;
+    }
+
+    & > select {
+      padding-left: 12px;
+      height: 30px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    & > a {
+      padding: 14px 18px 14px 18px;
+      cursor: pointer;
+      border-radius: 15px;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0px 3px 6px #00000029;
+      text-decoration: none;
+    }
+
+    & > a:hover {
+      box-shadow:none;
+    }
+
+`;
+
+export const NameRegisterContainer = styled.div`
+    width: 64%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & > input {
+        height: 40px;
+        padding-left: 16px;
+        border: solid 1px #707070;
+        border-radius: 15px;
+        margin-bottom: 12px;
+        font-family: Helvetica;
+    }
+`;
+/********************** */
+
+// hubs.js
+export const SprinklerTable = styled.table`
+  width: 100%;
+  text-align: center;
+  @media (max-width: 499px) {
+    & > tbody > tr > td:nth-of-type(2),
+    & > thead > tr > th:nth-of-type(2) {
+      display: none;
+    }
+  }
+`;
+
+
+// register.js
+export const FireRegisterContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > input {
+    width: 64%;
+    height: 40px;
+    padding-left: 16px;
+    border: solid 1px #707070;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    font-family: Helvetica;
+  }
+`;
 
 export const ApiRegisterButton = styled.button`
   padding-left: 40px;

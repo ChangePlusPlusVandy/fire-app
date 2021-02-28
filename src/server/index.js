@@ -99,7 +99,7 @@ let server = https.createServer(options, app).listen(8443, () => {
 http
   .createServer((req, res) => {
     console.log("Here");
-    const location = `https://localhost:8443/${req.url}`;
+    const location = `https://localhost:8443/`;
     console.log(`Redirect to: ${location}`);
     res.writeHead(302, { Location: location });
     res.end();
