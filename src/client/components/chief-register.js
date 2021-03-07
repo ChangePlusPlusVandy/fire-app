@@ -34,7 +34,7 @@ export const ChiefRegister = ({ history }) => {
 
     return (
         <FireRegisterContainer>
-            <TitleLine>Fire Prevention App</TitleLine>
+            <TitleLine>Fire Mitigation App</TitleLine>
             <NameRegisterContainer>
                 <input placeholder="First"/>
                 <input placeholder="Last"/>

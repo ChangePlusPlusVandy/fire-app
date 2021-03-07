@@ -108,7 +108,7 @@ export const OwnerRegister = ({ history }) => {
 
   return (
     <OwnerRegisterContainer>
-        <TitleLine>Fire Prevention App</TitleLine>
+        <TitleLine>Fire Mitigation App</TitleLine>
         <NameRegisterContainer>
             <input placeholder="First"/>
             <input placeholder="Last"/>

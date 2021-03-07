@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 export const Hubs = ({ history }) => {
     return (
         <FireRegisterContainer>
-            <TitleLine>Fire Prevention App</TitleLine>
+            <TitleLine>Fire Mitigation App</TitleLine>
             <SprinklerTable>
                 <tr>
                     <td>Name</td>

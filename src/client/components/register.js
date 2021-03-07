@@ -103,10 +103,10 @@ export const Register = ({ history }) => {
 
   return (
       <FireRegisterContainer>
-        <TitleLine>Fire Prevention App</TitleLine>
+        <TitleLine>Fire Mitigation App</TitleLine>
           <input placeholder="Username"/>
           <input placeholder="Password"/>
-          <FreeButton style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Log In</FreeButton>
+          <FreeButton style={{backgroundColor:"#cb0000", marginTop: "18px"}}>Log In</FreeButton>
           <p style={{marginTop: "1px"}}>or</p>
           <Link to="chief-register"><FreeButton style={{backgroundColor:"#b2b2b2", marginTop: "1px"}}>Sign Up As Fire Chief</FreeButton></Link>
           <p style={{color: "#CB0000", fontWeight: "bold"}}>Forgot Password</p>

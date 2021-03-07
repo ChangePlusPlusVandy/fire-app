@@ -48,14 +48,14 @@ const LandingInfoContainer = styled.div`
 
 export const Landing = () => (
   <LandingContainer>
-    <TitleLine>Fire Prevention App</TitleLine>
+    <TitleLine>Fire Mitigation App</TitleLine>
     <LandingButtonContainer>
       <Link to="register">Fire Chief</Link>
       <Link to="owner-register">Sprinkler Owner</Link>
     </LandingButtonContainer>
     <LandingInfoContainer>
-      <h4 style={{marginBottom: "4px"}}>About the Fire Prevention App</h4>
-      <p>This is the Fire Prevention App. This app was built by Change++ at Vanderbilt University. God bless Ethan Shifrin.</p>
+      <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>
+      <p>This is the Fire Mitigation App. This app was built by Change++ at Vanderbilt University.</p>
     </LandingInfoContainer>
   </LandingContainer>
 );

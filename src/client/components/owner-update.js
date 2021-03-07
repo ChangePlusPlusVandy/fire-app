@@ -168,7 +168,7 @@ export const OwnerUpdate = ({ history }) => {
   
     return (
       <OwnerRegisterContainer>
-          <TitleLine>Fire Prevention App</TitleLine>
+          <TitleLine>Fire Mitigation App</TitleLine>
           <input placeholder="Rachio API Key"/>
           <select onChange={onChange} id="update-select">
               <option value="">What information are you updating today?</option>
