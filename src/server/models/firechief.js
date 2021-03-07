@@ -50,11 +50,11 @@ Firechief.method("authenticate", function (plainText) {
 });
 
 Firechief.virtual("API_Keys").set(function (API_Keys) {
-    this.hash = encryptPassword(this.salt, API_Keys);
+    this.hash = encrpytAPI(this.salt, API_Keys);
 });
 
 Firechief.method("authenticate_API", function (plainText) {
-    return encryptPassword(this.salt, plainText) === this.hash;
+    return encrpytAPI(this.salt, plainText) === this.hash;
 });
 
 Firechief.pre("save", function (next) {
