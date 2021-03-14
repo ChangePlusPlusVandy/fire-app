@@ -134,6 +134,20 @@ const startAllZones = async (api_key, id, device) => {
   return {};
 };
 
+// starts all devices for a firechief -- intiser
+const startAllDevices = async ( devices ) => {
+  devices.forEach( device => {
+    try {
+      startAllZones(device.api_key, device.id, device)
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  return {};
+}
+
+
+
 module.exports = {
   getPersonId: getPersonId,
   getPersonInfo: getPersonInfo,
