@@ -18,88 +18,8 @@ import styled from "styled-components";
 import { validPassword, validUsername } from "../../shared";
 import {Link} from "react-router-dom";
 
-export const Register = ({ history }) => {
-  // let [state, setState] = useState({
-  //   username: "",
-  //   first_name: "",
-  //   last_name: "",
-  //   city: "Nashville",
-  //   primary_email: "",
-  //   password: "",
-  //   fire_district_code: 123,
-  //   is_fire_chief: false,
-  //   lat: 0,
-  //   lng: 0,
-  // });
-  // let [error, setError] = useState("");
-  // let [notify, setNotify] = useState("");
-  //
-  // const getCoordinates = () => {};
-  //
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(function (position) {
-  //     setState({
-  //       ...state,
-  //       lat: position.coords.latitude,
-  //       lng: position.coords.longitude,
-  //     });
-  //     console.log("Latitude is :", position.coords.latitude);
-  //     console.log("Longitude is :", position.coords.longitude);
-  //     setIsLoading(false);
-  //   });
-  //   document.getElementById("username").focus();
-  // }, []);
-  //
-  // const toggleCheck = (ev) => {
-  //   setState({
-  //     ...state,
-  //     is_fire_chief: !state.is_fire_chief,
-  //   });
-  // };
-  //
-  // const onChange = (ev) => {
-  //   setError("");
-  //   // Update from form and clear errors
-  //   setState({
-  //     ...state,
-  //     [ev.target.name]: ev.target.value,
-  //   });
-  //   // Make sure the username is valid
-  //   if (ev.target.name === "username") {
-  //     let usernameInvalid = validUsername(ev.target.value);
-  //     if (usernameInvalid) setError(`Error: ${usernameInvalid.error}`);
-  //   }
-  //   // Make sure password is valid
-  //   else if (ev.target.name === "password") {
-  //     let pwdInvalid = validPassword(ev.target.value);
-  //     if (pwdInvalid) setError(`Error: ${pwdInvalid.error}`);
-  //   }
-  // };
-  //
-  // const onSubmit = async (ev) => {
-  //   ev.preventDefault();
-  //   // Only proceed if there are no errors
-  //   if (error !== "") return;
-  //   const res = await fetch("/v1/user", {
-  //     method: "POST",
-  //     body: JSON.stringify(state),
-  //     credentials: "include",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   });
-  //   if (res.ok) {
-  //     // Notify users
-  //     setNotify(`${state.username} registered.  You will now need to log in.`);
-  //   } else {
-  //     const err = await res.json();
-  //     setError(err.error);
-  //   }
-  // };
-  //
-  // const onAcceptRegister = () => {
-  //   history.push("/login");
-  // };
+export const ChiefLogin = ({ history }) => {
+
 
   return (
       <FireRegisterContainer>
@@ -214,7 +134,7 @@ export const Register = ({ history }) => {
     //       />
     //       <div />
     //       <FormButton id="submitBtn" onClick={onSubmit}>
-    //         Register
+    //         ChiefLogin
     //       </FormButton>
     //     </FormBase>
     //   </div>
@@ -222,6 +142,6 @@ export const Register = ({ history }) => {
 };
 
 
-Register.propTypes = {
+ChiefLogin.propTypes = {
   history: PropTypes.object.isRequired,
 };
