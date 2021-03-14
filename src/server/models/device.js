@@ -34,4 +34,4 @@ Device.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Device", Device);
+module.exports = Device;
