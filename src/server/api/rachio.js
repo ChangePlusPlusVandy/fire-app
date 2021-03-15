@@ -135,10 +135,12 @@ const startAllZones = async (api_key, id, device) => {
 };
 
 // starts all devices for a firechief -- intiser
-const startAllDevices = async ( devices ) => {
+const startAllDevices = async ( devices, firezone ) => {
   devices.forEach( device => {
     try {
-      startAllZones(device.api_key, device.id, device)
+      if (device.firezone == firezone) {
+        startAllZones(device.api_key, device.id, device)
+      }
     } catch (err) {
       console.log(err);
     }
