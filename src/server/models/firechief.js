@@ -20,11 +20,12 @@ const encryptAPI = (salt, API_Keys) =>
 const reservedNames = ["password"];
 
 let Firechief = new Schema({
-    username: { type: String, required: true, index: { unique: true } },
-    primary_email: { type: String, index: { unique: true } },
     first_name: { type: String, default: "" },
     last_name: { type: String, default: "" },
-    city: { type: String, default: "" },
+    email: { type: String, index: { unique: true } },
+    phone: { type: String },
+    username: { type: String, required: true, index: { unique: true } },
+    department: { type: String, default: ""},
     is_authorized: { type: Boolean, default: true },
     hash: { type: String },
     salt: { type: String },
@@ -60,8 +61,8 @@ Firechief.method("authenticate_API", function (plainText) {
 Firechief.pre("save", function (next) {
     // Sanitize strings
     this.username = this.username.toLowerCase();
-    this.primary_email = this.primary_email
-        ? this.primary_email.toLowerCase()
+    this.email = this.email
+        ? this.email.toLowerCase()
         : "";
     this.first_name = this.first_name
         ? this.first_name.replace(/<(?:.|\n)*?>/gm, "")
@@ -69,7 +70,7 @@ Firechief.pre("save", function (next) {
     this.last_name = this.last_name
         ? this.last_name.replace(/<(?:.|\n)*?>/gm, "")
         : "";
-    this.city = this.city ? this.city.replace(/<(?:.|\n)*?>/gm, "") : "";
+    this.department = this.department ? this.department.replace(/<(?:.|\n)*?>/gm, "") : "";
     this.added_date = Date.now();
     next();
 });
