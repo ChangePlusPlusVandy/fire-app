@@ -54,7 +54,6 @@ export const ChiefRegister = ({history}) => {
 
     // On form submit, push information to database
     const onSubmit = async (ev) => {
-        console.log("hey whatever");
         ev.preventDefault();
         // Only proceed if there are no errors
         if (error !== "") return;
@@ -79,13 +78,6 @@ export const ChiefRegister = ({history}) => {
     const onAcceptRegister = () => {
       history.push("/login");
     };
-
-    // new onChange
-    // const onChange = (ev) => {
-    //     setState({
-    //         update_form: ev.target.value
-    //     });
-    // };
 
     return (
         <FireRegisterContainer>
@@ -133,7 +125,7 @@ export const ChiefRegister = ({history}) => {
                 name="department"
                 onChange={onChange}
                 value={state.department}>
-                <option value="default" disabled>Select Department</option>
+                <option selected value="default" disabled>Select Department</option>
                 <option value="moraga">Moraga</option>
                 <option value="orinda">Orinda</option>
             </select>
