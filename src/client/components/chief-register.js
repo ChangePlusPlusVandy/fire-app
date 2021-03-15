@@ -90,23 +90,57 @@ let [state, setState] = useState({
         <FireRegisterContainer>
             <TitleLine>Fire Mitigation App</TitleLine>
             <NameRegisterContainer>
-                <input placeholder="First"/>
-                <input placeholder="Last"/>
+                <input
+                    id="first_name"
+                    name="first_name"
+                    placeholder="First Name"
+                    onChange={onChange}
+                    value={state.first_name}/>
+                <input
+                    id="last_name"
+                    name="last_name"
+                    placeholder="Last Name"
+                    onChange={onChange}
+                    value={state.last_name}/>
             </NameRegisterContainer>
-            <input placeholder="Email"/>
-            <input placeholder="Phone"/>
-            <input placeholder="Username"/>
-            <input placeholder="Password"/>
-            <select onChange={onChange} id="update-select">
-                <option value="default" disabled>Department</option>
-                <option value="unlisted">Unlisted</option>
-                <option value="moraga-orinda">Moraga-Orinda</option>
+            <input
+                id="email"
+                name="email"
+                placeholder="Email"
+                onChange={onChange}
+                value={state.email}/>
+            <input
+                id="phone"
+                name="phone"
+                placeholder="Phone"
+                onChange={onChange}
+                value={state.phone}/>
+            <input
+                id="username"
+                name="username"
+                placeholder="Username"
+                onChange={onChange}
+                value={state.username}/>
+            <input
+                id="password"
+                name="password"
+                placeholder="Password"
+                onChange={onChange}
+                value={state.password}/>
+            <select
+                id="department"
+                name="department"
+                onChange={onChange}
+                value={state.department}>
+                <option value="default" disabled>Select Department</option>
+                <option value="moraga">Moraga</option>
+                <option value="orinda">Orinda</option>
             </select>
             <div style={{marginTop: "10px"}}>
                 <input className="consent-checkbox" type="checkbox" id="consent-agree"/>
                 <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{color:"389BFF", textDecoration:"none", cursor:"pointer"}}>terms and conditions</span></label>
             </div>
-            <Link to="hubs"><FreeButton style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Sign Up</FreeButton></Link>
+            <Link to="hubs"><FreeButton onClick={onSubmit} style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Sign Up</FreeButton></Link>
         </FireRegisterContainer>
     );
 };
