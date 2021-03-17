@@ -138,7 +138,7 @@ const startAllZones = async (api_key, id, device) => {
 const startAllDevices = async ( devices, firezone ) => {
   devices.forEach( device => {
     try {
-      if (device.firezone == firezone) {
+      if (device.firezone === firezone) {
         startAllZones(device.api_key, device.id, device)
       }
     } catch (err) {
@@ -148,6 +148,32 @@ const startAllDevices = async ( devices, firezone ) => {
   return {};
 }
 
+// calculates the distance from firezones and returns the closest one
+// "firezones" array should objects with name, lat and long
+const closestFirezone = async ( device, firezones ) => {
+  // calculates the distance between two geo locations
+  const calculateDistance = (lat1,lon1,lat2,lon2) => {
+    function deg2rad(deg) {
+      return deg * (Math.PI/180);
+    }
+    const R = 6371; // Radius of the earth in km
+    let dLat = deg2rad(lat2-lat1);  // deg2rad below
+    let dLon = deg2rad(lon2-lon1);
+    let a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let d = R * c; // Distance in km
+    return d;
+  }
+  // return shortest distance
+  const distances = firezones.map(firezone => calculateDistance(device.latitude, device.longitude,
+      firezone.latitude, firezone.longitude));
+  const closest = Math.min(...distances);
+  return firezones[distances.indexOf(closest)];
+}
 
 
 module.exports = {
@@ -157,4 +183,5 @@ module.exports = {
   getCurrentScheduleDuration: getCurrentScheduleDuration,
   concurrentGetDeviceDataAndSchedule: concurrentGetDeviceDataAndSchedule,
   startAllZones: startAllZones,
+  closestFirezone: closestFirezone,
 };
