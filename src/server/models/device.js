@@ -18,10 +18,10 @@ let Device = new Schema({
   city: { type: String, default: "" },
   latitude: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
-  firezone: { type: Number, required: 0},
   name: { type: String, default: "" },
   added_date: { type: Date },
   zones: [Zone],
+  firezone: { type: String, required: 0},
 });
 
 Device.pre("save", function (next) {
