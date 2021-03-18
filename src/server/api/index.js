@@ -5,4 +5,5 @@ module.exports = (app) => {
   require("./v1/firechief")(app);
   require("./v1/session")(app);
   require("./v1/device")(app);
+  require("./v1/homeuser")(app);
 };

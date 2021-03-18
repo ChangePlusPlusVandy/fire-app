@@ -121,7 +121,7 @@ export const FreeButton = styled.p`
   }
 `;
 
-// owner-register.js
+// homeuser-register.js
 export const OwnerRegisterContainer = styled.div`
     margin-top: 100px;
     display: flex;

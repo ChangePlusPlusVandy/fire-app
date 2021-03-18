@@ -9,8 +9,7 @@ import { Header } from "./components/header";
 import { Landing } from "./components/landing";
 import { Login } from "./components/login";
 import { Logout } from "./components/logout";
-import { Register } from "./components/register";
-import {OwnerRegister} from "./components/owner-register";
+import {HomeuserRegister} from "./components/homeuser-register";
 import {OwnerUpdate} from "./components/owner-update";
 import { Profile } from "./components/profile";
 import { EditProfile } from "./components/editprofile";
@@ -115,12 +114,12 @@ const MyApp = () => {
           render={(p) => <Logout {...p} logOut={logOut} />}
         />
         <Route
-          path="/owner-register"
+          path="/homeuser-register"
           render={(p) => {
             return loggedIn() ? (
               <Redirect to={`/profile/${state.username}`} />
             ) : (
-              <OwnerRegister {...p} />
+              <HomeuserRegister {...p} />
             );
           }}
         />
@@ -128,10 +127,6 @@ const MyApp = () => {
         <Route
           path="/owner-update"
           component={OwnerUpdate}
-        />
-        <Route
-          path="/register"
-          component={Register}
         />
         <Route
             path="/chief-register"

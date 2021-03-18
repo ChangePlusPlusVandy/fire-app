@@ -1,5 +1,15 @@
 "use strict";
 
+const {
+    getPersonId,
+    getPersonInfo,
+    getDeviceDataStatus,
+    getCurrentScheduleDuration,
+    concurrentGetDeviceDataAndSchedule,
+    startAllZones,
+    closestFirezone
+} = require("../rachio");
+
 const Joi = require("@hapi/joi");
 
 module.exports = (app) => {
@@ -19,12 +29,34 @@ module.exports = (app) => {
                 first_name: Joi.string().allow(""),
                 last_name: Joi.string().allow(""),
                 phone: Joi.number().min(10).required(),
+                api_key: Joi.string().required(),
             });
             data = await schema.validateAsync(req.body);
         } catch (err) {
             const message = err.details[0].message;
             console.log(`Homeuser.create validation failure: ${message}`);
             return res.status(400).send({ error: message });
+        }
+
+        // try to get person id
+        try {
+            const person_id = await getPersonId(data.api_key);
+            data["person_id"] = person_id.id;
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({ error: "Invalid API Key entered"});
+        }
+
+        // try to get other information
+        try {
+            const person_info = await getPersonInfo(data.api_key, data.person_id);
+            data["email"] = person_info.email;
+            data["create_date"] = person_info.createDate;
+            const device_ID = person_info.devices.map(device => device.id);
+            data["device_ID"] = device_ID;
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({ error: "Failed getting homeuser data from API"});
         }
 
         // Try to create the user

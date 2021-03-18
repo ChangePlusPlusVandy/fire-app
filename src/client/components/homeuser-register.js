@@ -1,3 +1,4 @@
+/* Copyright G. Hemingway, @2020 - All rights reserved */
 "use strict";
 
 import React, {useState, useEffect} from "react";
@@ -11,28 +12,23 @@ import {
     ModalNotify,
     FormSwitch,
     FormSelect,
-    Checkbox, FireRegisterContainer,
+    Checkbox,
 } from "./shared";
 import styled from "styled-components";
 import {validPassword, validUsername} from "../../shared";
 import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
 import {Link} from "react-router-dom";
 
-
-export const ChiefRegister = ({history}) => {
+export const HomeuserRegister = ({history}) => {
     let [state, setState] = useState({
         first_name: "",
         last_name: "",
-        email: "",
         phone: "",
-        username: "",
-        password: "",
-        department: "",
+        api_key: "",
     });
     let [error, setError] = useState("");
     let [notify, setNotify] = useState("");
 
-    // When user makes changes, update the state
     const onChange = (ev) => {
         setError("");
         // Update from form and clear errors
@@ -57,7 +53,7 @@ export const ChiefRegister = ({history}) => {
         ev.preventDefault();
         // Only proceed if there are no errors
         if (error !== "") return;
-        const res = await fetch("/v1/firechief", {
+        const res = await fetch("/v1/homeuser", {
             method: "POST",
             body: JSON.stringify(state),
             credentials: "include",
@@ -67,20 +63,15 @@ export const ChiefRegister = ({history}) => {
         });
         if (res.ok) {
             // Notify users
-            setNotify(`${state.username} registered.  You will now need to log in.`);
+            setNotify(`${state.first_name} registered.`);
         } else {
             const err = await res.json();
             setError(err.error);
         }
     };
 
-    //
-    const onAcceptRegister = () => {
-      history.push("/login");
-    };
-
     return (
-        <FireRegisterContainer>
+        <OwnerRegisterContainer>
             <TitleLine>Fire Mitigation App</TitleLine>
             <NameRegisterContainer>
                 <input
@@ -97,41 +88,24 @@ export const ChiefRegister = ({history}) => {
                     value={state.last_name}/>
             </NameRegisterContainer>
             <input
-                id="email"
-                name="email"
-                placeholder="Email"
-                onChange={onChange}
-                value={state.email}/>
-            <input
                 id="phone"
                 name="phone"
                 placeholder="Phone"
                 onChange={onChange}
                 value={state.phone}/>
             <input
-                id="username"
-                name="username"
-                placeholder="Username"
+                id="api_key"
+                name="api_key"
+                placeholder="Rachio API Key"
                 onChange={onChange}
-                value={state.username}/>
-            <input
-                id="password"
-                name="password"
-                placeholder="Password"
-                onChange={onChange}
-                value={state.password}/>
-            <select
-                id="department"
-                name="department"
-                onChange={onChange}
-                value={state.department}>
-                <option default value="default" disabled>Select Department</option>
-                <option value="Unlisted">Unlisted</option>
-                <option value="moraga">Moraga</option>
-                <option value="orinda">Orinda</option>
-            </select>
+                value={state.api_key}/>
             <div style={{marginTop: "10px"}}>
-                <input className="consent-checkbox" type="checkbox" id="consent-agree"/>
+                <input
+                    id="consent-agree"
+                    className="consent-checkbox"
+                    name="consent_agree"
+                    type="checkbox"
+                />
                 <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{
                     color: "389BFF",
                     textDecoration: "none",
@@ -139,10 +113,12 @@ export const ChiefRegister = ({history}) => {
                 }}>terms and conditions</span></label>
             </div>
             <FreeButton onClick={onSubmit} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>Sign Up</FreeButton>
-        </FireRegisterContainer>
+            <Link to="owner-update" style={{backgroundColor: "#AFAFAF", marginTop: "80px"}}>Already Registered? Update
+                Rachio Info</Link>
+        </OwnerRegisterContainer>
     );
-};
+}
 
-ChiefRegister.propTypes = {
+HomeuserRegister.propTypes = {
     history: PropTypes.object.isRequired,
 };

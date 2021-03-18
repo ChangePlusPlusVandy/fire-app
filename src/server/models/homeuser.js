@@ -16,17 +16,17 @@ const encryptAPI = (salt, API_Keys) =>
 const reservedNames = ["password"];
 
 let Homeuser = new Schema({
-    primary_email: { type: String, index: { unique: true } },
+    person_id: { type: String, index: { unique: true } },
+    email: { type: String, index: { unique: true } },
     first_name: { type: String, default: "" },
     last_name: { type: String, default: "" },
-    zip_code: { type: String, default: "" },
-    phone_number: {type: Number, default: 0},
-    api_key: {type: Number, required: true},
+    phone: {type: Number, default: 0},
+    api_key: {type: String, required: true},
     hash: { type: String },
     salt: { type: String },
     token: { type: String },
     create_date: { type: Date },
-    device_ID: [Device]
+    device_ID: {type: Array },
 });
 /*
 Homeuser.path("username").validate(function (value) {

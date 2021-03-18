@@ -50,8 +50,8 @@ export const Landing = () => (
   <LandingContainer>
     <TitleLine>Fire Mitigation App</TitleLine>
     <LandingButtonContainer>
-      <Link to="register">Fire Chief</Link>
-      <Link to="owner-register">Sprinkler Owner</Link>
+      <Link to="chief-register">Fire Chief</Link>
+      <Link to="homeuser-register">Home User</Link>
     </LandingButtonContainer>
     <LandingInfoContainer>
       <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>

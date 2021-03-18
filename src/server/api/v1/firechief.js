@@ -7,13 +7,13 @@ module.exports = (app) => {
     /**
      * Create a new firechief
      *
-     * @param {req.body.username} Display name of the new user
-     * @param {req.body.first_name} First name of the user - optional
-     * @param {req.body.last_name} Last name of the user - optional
+     * @param {req.body.first_name} First name of the firechief - optional
+     * @param {req.body.last_name} Last name of the firechief - optional
      * @param {req.body.city} City user lives in - optional
      * @param {req.body.email} Email address of the user
-     * @param {req.body.fire_district_code} Fire district code of user
-     * @param {req.body.is_fire_chief} Whether user is fire chief
+     * @param {req.body.phone} Phone of the new firechief
+     * @param {req.body.username} Display name of the new user
+
      * @param {req.body.lat} Latitude of user's home
      * @param {req.body.lng} Longitude of user's home
      * @param {req.body.password} Password for the user
