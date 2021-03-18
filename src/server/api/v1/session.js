@@ -19,12 +19,14 @@ module.exports = (app) => {
       username: Joi.string().lowercase().required(),
       password: Joi.string().required(),
     });
+    let data = await schema.validateAsync(req.body);
     try {
-      let data = await schema.validateAsync(req.body);
       // Search database for user
-      const user = await app.models.User.findOne({ username: data.username });
+      const user = await app.models.Firechief.findOne({ username: data.username });
       // If not found, return 401:unauthorized
-      if (!user) res.status(401).send({ error: "unauthorized" });
+      if (!user) {
+        res.status(401).send({ error: "unauthorized" });
+      }
       // If found, compare hashed passwords
       else if (user.authenticate(data.password)) {
         // Regenerate session when signing in to prevent fixation

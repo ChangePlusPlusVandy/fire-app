@@ -15,9 +15,10 @@ import { Profile } from "./components/profile";
 import { EditProfile } from "./components/editprofile";
 import SprinklerRegister from "./components/sprinkler-registration";
 import SprinklerMap from "./components/sprinkler-map";
+import {ChiefLogin} from "./components/chief-login";
 import {ChiefRegister} from "./components/chief-register";
 import {Hubs} from "./components/hubs";
-//import SprinklerMangement from "./components/sprinkler-management";
+import SprinklerMangement from "./components/sprinkler-management";
 //import SprinklerMap from "./components/sprinkler-map";
 
 const defaultUser = {
@@ -129,12 +130,20 @@ const MyApp = () => {
           component={OwnerUpdate}
         />
         <Route
+            path="/chief-login"
+            component={ChiefLogin}
+        />
+        <Route
             path="/chief-register"
             component={ChiefRegister}
         />
         <Route
             path="/hubs"
             component={Hubs}
+        />
+        <Route
+            path="/sprinkler-management"
+            component={SprinklerMangement}
         />
         <Route
           path="/profile/:username"

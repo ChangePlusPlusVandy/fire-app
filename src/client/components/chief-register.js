@@ -67,16 +67,12 @@ export const ChiefRegister = ({history}) => {
         });
         if (res.ok) {
             // Notify users
-            setNotify(`${state.username} registered.  You will now need to log in.`);
+            window.alert(`${state.username} successfully registered.  You will now need to log in.`);
+            history.push("/chief-login");
         } else {
             const err = await res.json();
             setError(err.error);
         }
-    };
-
-    //
-    const onAcceptRegister = () => {
-      history.push("/login");
     };
 
     return (
