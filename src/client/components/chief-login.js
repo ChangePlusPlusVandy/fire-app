@@ -60,7 +60,7 @@ export const ChiefLogin = ({ history }) => {
     });
     if (res.ok) {
       // Credentials match, move on to next page
-      history.push("./sprinkler-management")
+      history.push("./devices-table")
     } else {
       const err = await res.json();
       setError(err.error);

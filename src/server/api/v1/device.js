@@ -45,10 +45,6 @@ module.exports = (app) => {
         try {
             // Validate user input
             let schema = Joi.object().keys({
-                owner: Joi.string().lowercase().alphanum().min(3).max(32).required(),
-                city: Joi.string().required(),
-                lat: Joi.number().required(),
-                lng: Joi.number().required(),
                 api_key: Joi.string().required(),
             });
             data = await schema.validateAsync(req.body);
@@ -72,16 +68,16 @@ module.exports = (app) => {
             const person_info = await getPersonInfo(data.api_key, data.person_id);
             person_info.devices.forEach((item, i) => {
                 let device = {
-                    owner: data.owner,
+                    owner: person_info.username,
                     owner_id: person_info.id,
                     owner_name: person_info.fullName,
                     owner_email: person_info.email,
                     api_key: data.api_key,
-                    city: data.city,
                     id: item.id,
                     latitude: item.latitude,
                     longitude: item.longitude,
-                    firezone: closestFirezone(device, firezones).name,
+                    create_date: item.createDate,
+                    firezone: closestFirezone(item, firezones).name,
                     name: item.name,
                     zones: [],
                 };

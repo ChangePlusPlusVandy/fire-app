@@ -53,7 +53,7 @@ export const HomeuserRegister = ({history}) => {
         ev.preventDefault();
         // Only proceed if there are no errors
         if (error !== "") return;
-        const res = await fetch("/v1/homeuser", {
+        const res1 = await fetch("/v1/homeuser", {
             method: "POST",
             body: JSON.stringify(state),
             credentials: "include",
@@ -61,12 +61,23 @@ export const HomeuserRegister = ({history}) => {
                 "content-type": "application/json",
             },
         });
-        if (res.ok) {
+        const res2 = await fetch("/v1/device", {
+            method: "POST",
+            body: JSON.stringify({
+                api_key: state.api_key
+            }),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+        if (res1.ok && res2.ok) {
             // Notify users
             setNotify(`${state.first_name} registered.`);
         } else {
-            const err = await res.json();
-            setError(err.error);
+            const err1 = await res1.json();
+            const err2 = await res2.json();
+            setError(err1.error + err2.error);
         }
     };
 

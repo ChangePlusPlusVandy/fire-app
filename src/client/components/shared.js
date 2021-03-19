@@ -179,7 +179,7 @@ export const NameRegisterContainer = styled.div`
 `;
 /********************** */
 
-// hubs.js
+// devices-table.js
 export const SprinklerTable = styled.table`
   width: 100%;
   text-align: center;

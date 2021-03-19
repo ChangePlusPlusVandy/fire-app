@@ -15,11 +15,11 @@ let Device = new Schema({
   owner_name: { type: String, default: "" },
   owner_email: { type: String },
   id: { type: String },
-  city: { type: String, default: "" },
+  // city: { type: String, default: "" },
   latitude: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   name: { type: String, default: "" },
-  added_date: { type: Date },
+  create_date: { type: Date },
   zones: [Zone],
   firezone: { type: String, required: 0},
 });
@@ -34,4 +34,4 @@ Device.pre("save", function (next) {
   next();
 });
 
-module.exports = Device;
+module.exports = mongoose.model("Device", Device);

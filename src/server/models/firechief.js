@@ -22,15 +22,18 @@ const reservedNames = ["password"];
 let Firechief = new Schema({
     first_name: { type: String, default: "" },
     last_name: { type: String, default: "" },
-    email: { type: String, index: { unique: true } },
+    email: { type: String, index: { unique: true }, unique: true },
     phone: { type: String },
-    username: { type: String, required: true, index: { unique: true } },
+    username: { type: String, required: true, index: { unique: true }, unique: true },
     department: { type: String, default: ""},
     is_authorized: { type: Boolean, default: true },
     hash: { type: String },
     salt: { type: String },
     create_date: { type: Date },
-    controllable_devices: [Device],
+    controllable_devices: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Device'
+    }],
 });
 
 Firechief.path("username").validate(function (value) {
