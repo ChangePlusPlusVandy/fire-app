@@ -22,9 +22,9 @@ let Homeuser = new Schema({
     last_name: { type: String, default: "" },
     phone: {type: Number, default: 0},
     api_key: {type: String, required: true},
-    hash: { type: String },
-    salt: { type: String },
-    token: { type: String },
+    // hash: { type: String },
+    // salt: { type: String },
+    // token: { type: String },
     create_date: { type: Date },
     device_ID: {type: Array },
 });

@@ -36,16 +36,6 @@ export const HomeuserRegister = ({history}) => {
             ...state,
             [ev.target.name]: ev.target.value,
         });
-        // Make sure the username is valid
-        if (ev.target.name === "username") {
-            let usernameInvalid = validUsername(ev.target.value);
-            if (usernameInvalid) setError(`Error: ${usernameInvalid.error}`);
-        }
-        // Make sure password is valid
-        else if (ev.target.name === "password") {
-            let pwdInvalid = validPassword(ev.target.value);
-            if (pwdInvalid) setError(`Error: ${pwdInvalid.error}`);
-        }
     };
 
     // On form submit, push information to database
@@ -61,23 +51,23 @@ export const HomeuserRegister = ({history}) => {
                 "content-type": "application/json",
             },
         });
-        const res2 = await fetch("/v1/device", {
-            method: "POST",
-            body: JSON.stringify({
-                api_key: state.api_key
-            }),
-            credentials: "include",
-            headers: {
-                "content-type": "application/json",
-            },
-        });
-        if (res1.ok && res2.ok) {
+        // const res2 = await fetch("/v1/device", {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         api_key: state.api_key
+        //     }),
+        //     credentials: "include",
+        //     headers: {
+        //         "content-type": "application/json",
+        //     },
+        // });
+        if (res1.ok) {
             // Notify users
             setNotify(`${state.first_name} registered.`);
         } else {
             const err1 = await res1.json();
-            const err2 = await res2.json();
-            setError(err1.error + err2.error);
+            // const err2 = await res2.json();
+            setError(err1.error);
         }
     };
 

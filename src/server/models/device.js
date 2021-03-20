@@ -21,7 +21,7 @@ let Device = new Schema({
   name: { type: String, default: "" },
   create_date: { type: Date },
   zones: [Zone],
-  firezone: { type: String, required: 0},
+  firezone: { type: Number, required: 0},
 });
 
 Device.pre("save", function (next) {

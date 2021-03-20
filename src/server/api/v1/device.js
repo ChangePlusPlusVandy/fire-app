@@ -15,12 +15,12 @@ const {
 
 const firezones = [
     {
-        name: "Moraga",
+        number: 1,
         latitude: 37.8349,
         longitude: 122.1297,
     },
     {
-        name: "Orinda",
+        number: 2,
         latitude: 37.8771,
         longitude: 122.1797,
     }
@@ -77,7 +77,7 @@ module.exports = (app) => {
                     latitude: item.latitude,
                     longitude: item.longitude,
                     create_date: item.createDate,
-                    firezone: closestFirezone(item, firezones).name,
+                    firezone: closestFirezone(item, firezones).number,
                     name: item.name,
                     zones: [],
                 };
@@ -93,6 +93,8 @@ module.exports = (app) => {
             console.log(err);
             return res.status(400).send({error: "Failed getting sprinkler data"});
         }
+
+        // push device's id to appropriate firechief
 
         // Try to create the sprinklers
         devices.forEach(async (data, id) => {

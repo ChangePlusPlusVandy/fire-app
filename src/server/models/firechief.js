@@ -25,11 +25,12 @@ let Firechief = new Schema({
     email: { type: String, index: { unique: true }, unique: true },
     phone: { type: String },
     username: { type: String, required: true, index: { unique: true }, unique: true },
-    department: { type: String, default: ""},
     is_authorized: { type: Boolean, default: true },
     hash: { type: String },
     salt: { type: String },
     create_date: { type: Date },
+    department: { type: String, default: ""},
+    controllable_firezones: [ {type: String} ],
     controllable_devices: [{
         type: Schema.Types.ObjectId,
         ref: 'Device'
