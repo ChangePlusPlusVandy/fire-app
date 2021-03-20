@@ -51,16 +51,16 @@ export const HomeuserRegister = ({history}) => {
                 "content-type": "application/json",
             },
         });
-        // const res2 = await fetch("/v1/device", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         api_key: state.api_key
-        //     }),
-        //     credentials: "include",
-        //     headers: {
-        //         "content-type": "application/json",
-        //     },
-        // });
+        const res2 = await fetch("/v1/device", {
+            method: "POST",
+            body: JSON.stringify({
+                api_key: state.api_key
+            }),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
         if (res1.ok) {
             // Notify users
             setNotify(`${state.first_name} registered.`);
