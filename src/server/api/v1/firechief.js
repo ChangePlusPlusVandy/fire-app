@@ -33,6 +33,7 @@ module.exports = (app) => {
                 department: Joi.string(),
             });
             data = await schema.validateAsync(req.body);
+            data["controllable_firezones"] = [1, 2];
         } catch (err) {
             const message = err.details[0].message;
             console.log(`Firechief.create validation failure: ${message}`);
@@ -89,7 +90,7 @@ module.exports = (app) => {
      * @param {req.params.username} Username of the firechief to query for
      * @return {200, {username, email, first_name, last_name, city, fire_district_code, longitude, latitue, is_fire_chief}}
      */
-    app.get("/v1/firechief/:username", async (req, res) => {
+    app.get("v1/firechief/:username", async (req, res) => {
         let firechief = await app.models.Firechief.findOne({
             username: req.params.username.toLowerCase(),
         }).exec();
@@ -152,5 +153,29 @@ module.exports = (app) => {
             );
             res.status(500).end();
         }
+    });
+
+
+    /**
+     * Update a firechief's controllable_devices
+     *
+     * @param {req.body.username} _id of the firechief to be updated
+     * @param {req.body.device_id} _id of device to be pushed to controllable_devices
+     * @return {204, no body content} Return status only
+     */
+
+    app.put("/v1/firechief/controllable_devices", async (req, res) => {
+        let data = req.body;
+        console.log(data);
+        try {
+            await app.models.Firechief.findByIdAndUpdate(
+                data.firechief_id,
+                { "$push": { "controllable_devices": data.device_id} },
+            );
+            res.status(204).end();
+        } catch (err) {
+            console.log("Device ID could not be added to firechief controllable_devices.")
+        };
+        res.status(500).end();
     });
 };

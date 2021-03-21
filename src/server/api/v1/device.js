@@ -25,6 +25,8 @@ const firezones = [
         longitude: 122.1797,
     }
 ]
+// devices are assigned firezone 0 if not within maxDistance km of any firezone
+const maxDistance = 10;
 
 
 module.exports = (app) => {
@@ -66,7 +68,7 @@ module.exports = (app) => {
         // get the person info
         try {
             const person_info = await getPersonInfo(data.api_key, data.person_id);
-            person_info.devices.forEach((item, i) => {
+            await Promise.all(person_info.devices.map(async (item, i) => {
                 let device = {
                     owner: person_info.username,
                     owner_id: person_info.id,
@@ -77,7 +79,7 @@ module.exports = (app) => {
                     latitude: item.latitude,
                     longitude: item.longitude,
                     create_date: item.createDate,
-                    firezone: closestFirezone(item, firezones).number,
+                    firezone: 0,
                     name: item.name,
                     zones: [],
                 };
@@ -87,14 +89,22 @@ module.exports = (app) => {
                         number: item.zoneNumber,
                     });
                 });
+
+                device["firezone"] = closestFirezone(item, firezones, maxDistance).number;
+
+                let matchedChiefs = await app.models.Firechief
+                    .find( { controllable_firezones: device.firezone } );
+                await Promise.all(matchedChiefs.map(async chief => {
+                    chief.controllable_devices.push(device.id);
+                    await chief.save();
+                }));
+
                 devices.push(device);
-            });
+            }));
         } catch (err) {
             console.log(err);
             return res.status(400).send({error: "Failed getting sprinkler data"});
         }
-
-        // push device's id to appropriate firechief
 
         // Try to create the sprinklers
         devices.forEach(async (data, id) => {

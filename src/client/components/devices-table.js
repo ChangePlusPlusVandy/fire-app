@@ -74,7 +74,7 @@ export const DevicesTable = ({history}) => {
                 owner_id: "",
                 owner_name: "",
                 zones: [],
-                firezone: "",
+                firezone: 0,
             },
         ],
     });

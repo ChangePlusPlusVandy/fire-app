@@ -30,9 +30,9 @@ let Firechief = new Schema({
     salt: { type: String },
     create_date: { type: Date },
     department: { type: String, default: ""},
-    controllable_firezones: [ {type: Number} ],
+    controllable_firezones: [ { type: Number } ],
     controllable_devices: [{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Device'
     }],
 });
