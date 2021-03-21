@@ -61,13 +61,16 @@ export const HomeuserRegister = ({history}) => {
                 "content-type": "application/json",
             },
         });
-        if (res1.ok) {
+        if (res1.ok && res2.ok) {
             // Notify users
             setNotify(`${state.first_name} registered.`);
+            window.alert(`Successfully registered. Thank you for your participation!`);
+            history.push("/chief-login");
         } else {
+            window.alert(`You entered an invalid API key.`);
             const err1 = await res1.json();
-            // const err2 = await res2.json();
-            setError(err1.error);
+            const err2 = await res2.json();
+            setError(err1.error + err2.error);
         }
     };
 

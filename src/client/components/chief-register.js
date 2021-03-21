@@ -29,6 +29,7 @@ export const ChiefRegister = ({history}) => {
         password: "",
         department: "",
     });
+    let [consent, setConsent] = useState(false);
     let [error, setError] = useState("");
     let [notify, setNotify] = useState("");
 
@@ -52,11 +53,37 @@ export const ChiefRegister = ({history}) => {
         }
     };
 
+    // change checkbox value
+    const toggleCheck = (ev) => {
+        setConsent(!consent);
+    };
+
     // On form submit, push information to database
     const onSubmit = async (ev) => {
         ev.preventDefault();
-        // Only proceed if there are no errors
-        if (error !== "") return;
+        // Only proceed if consent is checked
+        if (!consent) {
+            window.alert("You to have agree to the terms and conditions.");
+            return;
+        }
+        let usernameInvalid = validUsername(state.username);
+        let pwdInvalid = validPassword(state.password);
+        // check if username and password are valid
+        if (usernameInvalid) {
+            setError(`Error: ${usernameInvalid.error}`);
+            console.log(usernameInvalid.error);
+        }
+        if (pwdInvalid) {
+            setError(`Error: ${pwdInvalid.error}`);
+            console.log(pwdInvalid.error);
+        }
+
+        // proceed only if there are no errors
+        if (error !== "") {
+            window.alert(error);
+            return;
+        }
+        console.log("jacchi");
         const res = await fetch("/v1/firechief", {
             method: "POST",
             body: JSON.stringify(state),
@@ -127,7 +154,13 @@ export const ChiefRegister = ({history}) => {
                 <option value="orinda">Orinda</option>
             </select>
             <div style={{marginTop: "10px"}}>
-                <input className="consent-checkbox" type="checkbox" id="consent-agree"/>
+                <input
+                    className="consent-checkbox"
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    onChange={toggleCheck}
+                    value={consent}/>
                 <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{
                     color: "389BFF",
                     textDecoration: "none",
