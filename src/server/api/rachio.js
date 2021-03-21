@@ -150,7 +150,8 @@ const startAllDevices = async (devices, firezone) => {
 
 // calculates the distance from firezones and returns the closest one
 // "firezones" array should objects with name, lat and long
-const closestFirezone = async (device, firezones) => {
+// returns firezone 0 if not within maxDistance km of any firezone
+const closestFirezone = (device, firezones, maxDistance) => {
     // calculates the distance between two geo locations
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
         function deg2rad(deg) {
@@ -173,6 +174,9 @@ const closestFirezone = async (device, firezones) => {
     const distances = firezones.map(firezone => calculateDistance(device.latitude, device.longitude,
         firezone.latitude, firezone.longitude));
     const closest = Math.min(...distances);
+    if (closest > maxDistance) {
+        return { number: 0 };
+    }
     return firezones[distances.indexOf(closest)];
 }
 
