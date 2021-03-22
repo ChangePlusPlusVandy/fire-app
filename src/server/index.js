@@ -67,6 +67,8 @@ const setupServer = async () => {
   app.models = {
     User: require("./models/user"),
     Device: require("./models/device"),
+    Firechief: require("./models/firechief"),
+    Homeuser: require("./models/homeuser"),
   };
 
   // Import our routes

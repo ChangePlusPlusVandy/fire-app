@@ -9,16 +9,16 @@ import { Header } from "./components/header";
 import { Landing } from "./components/landing";
 import { Login } from "./components/login";
 import { Logout } from "./components/logout";
-import { Register } from "./components/register";
-import {OwnerRegister} from "./components/owner-register";
+import {HomeuserRegister} from "./components/homeuser-register";
 import {OwnerUpdate} from "./components/owner-update";
 import { Profile } from "./components/profile";
 import { EditProfile } from "./components/editprofile";
 import SprinklerRegister from "./components/sprinkler-registration";
 import SprinklerMap from "./components/sprinkler-map";
+import {ChiefLogin} from "./components/chief-login";
 import {ChiefRegister} from "./components/chief-register";
-import {Hubs} from "./components/hubs";
-//import SprinklerMangement from "./components/sprinkler-management";
+import {DevicesTable} from "./components/devices-table";
+// import SprinklerMangement from "./components/sprinkler-management";
 //import SprinklerMap from "./components/sprinkler-map";
 
 const defaultUser = {
@@ -115,12 +115,12 @@ const MyApp = () => {
           render={(p) => <Logout {...p} logOut={logOut} />}
         />
         <Route
-          path="/owner-register"
+          path="/homeuser-register"
           render={(p) => {
             return loggedIn() ? (
               <Redirect to={`/profile/${state.username}`} />
             ) : (
-              <OwnerRegister {...p} />
+              <HomeuserRegister {...p} />
             );
           }}
         />
@@ -130,16 +130,16 @@ const MyApp = () => {
           component={OwnerUpdate}
         />
         <Route
-          path="/register"
-          component={Register}
+            path="/chief-login"
+            component={ChiefLogin}
         />
         <Route
             path="/chief-register"
             component={ChiefRegister}
         />
         <Route
-            path="/hubs"
-            component={Hubs}
+            path="/devices-table"
+            component={DevicesTable}
         />
         <Route
           path="/profile/:username"

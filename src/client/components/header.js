@@ -41,10 +41,10 @@ const HeaderLeft = ({ user }) => {
     <HeaderLeftBase>
       {user !== "" ? (
         <Link to={`/profile/${user}`}>
-          <h2>Fire Prevention App</h2>
+          <h2>Fire Mitigation App</h2>
         </Link>
       ) : (
-        <h2>Fire Prevention App</h2>
+        <h2>Fire Mitigation App</h2>
       )}
     </HeaderLeftBase>
   );

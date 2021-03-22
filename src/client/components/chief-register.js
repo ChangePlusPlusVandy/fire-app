@@ -1,6 +1,6 @@
 "use strict";
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {
     ErrorMessage,
@@ -14,45 +14,160 @@ import {
     Checkbox, FireRegisterContainer,
 } from "./shared";
 import styled from "styled-components";
-import { validPassword, validUsername } from "../../shared";
-import { TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer } from "./shared"
-import { Link } from "react-router-dom";
+import {validPassword, validUsername} from "../../shared";
+import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
+import {Link} from "react-router-dom";
 
 
-export const ChiefRegister = ({ history }) => {
+export const ChiefRegister = ({history}) => {
+    let [state, setState] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        username: "",
+        password: "",
+        department: "",
+    });
+    let [consent, setConsent] = useState(false);
+    let [error, setError] = useState("");
+    let [notify, setNotify] = useState("");
 
+    // When user makes changes, update the state
     const onChange = (ev) => {
+        setError("");
+        // Update from form and clear errors
         setState({
-            update_form: ev.target.value
+            ...state,
+            [ev.target.name]: ev.target.value,
         });
+        // Make sure the username is valid
+        if (ev.target.name === "username") {
+            let usernameInvalid = validUsername(ev.target.value);
+            if (usernameInvalid) setError(`Error: ${usernameInvalid.error}`);
+        }
+        // Make sure password is valid
+        else if (ev.target.name === "password") {
+            let pwdInvalid = validPassword(ev.target.value);
+            if (pwdInvalid) setError(`Error: ${pwdInvalid.error}`);
+        }
     };
 
+    // change checkbox value
+    const toggleCheck = (ev) => {
+        setConsent(!consent);
+    };
+
+    // On form submit, push information to database
     const onSubmit = async (ev) => {
         ev.preventDefault();
-        console.log("Registering...");
-    }
+        // Only proceed if consent is checked
+        if (!consent) {
+            window.alert("You to have agree to the terms and conditions.");
+            return;
+        }
+        let usernameInvalid = validUsername(state.username);
+        let pwdInvalid = validPassword(state.password);
+        // check if username and password are valid
+        if (usernameInvalid) {
+            setError(`Error: ${usernameInvalid.error}`);
+            console.log(usernameInvalid.error);
+        }
+        if (pwdInvalid) {
+            setError(`Error: ${pwdInvalid.error}`);
+            console.log(pwdInvalid.error);
+        }
+
+        // proceed only if there are no errors
+        if (error !== "") {
+            window.alert(error);
+            return;
+        }
+        console.log("jacchi");
+        const res = await fetch("/v1/firechief", {
+            method: "POST",
+            body: JSON.stringify(state),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+        if (res.ok) {
+            // Notify users
+            window.alert(`${state.username} successfully registered.  You will now need to log in.`);
+            history.push("/chief-login");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+        }
+    };
 
     return (
         <FireRegisterContainer>
-            <TitleLine>Fire Prevention App</TitleLine>
+            <TitleLine>Fire Mitigation App</TitleLine>
             <NameRegisterContainer>
-                <input placeholder="First"/>
-                <input placeholder="Last"/>
+                <input
+                    id="first_name"
+                    name="first_name"
+                    placeholder="First Name"
+                    onChange={onChange}
+                    value={state.first_name}/>
+                <input
+                    id="last_name"
+                    name="last_name"
+                    placeholder="Last Name"
+                    onChange={onChange}
+                    value={state.last_name}/>
             </NameRegisterContainer>
-            <input placeholder="Email"/>
-            <input placeholder="Phone"/>
-            <input placeholder="Username"/>
-            <input placeholder="Password"/>
-            <select onChange={onChange} id="update-select">
-                <option value="default" disabled>Department</option>
-                <option value="unlisted">Unlisted</option>
-                <option value="moraga-orinda">Moraga-Orinda</option>
+            <input
+                id="email"
+                name="email"
+                placeholder="Email"
+                onChange={onChange}
+                value={state.email}/>
+            <input
+                id="phone"
+                name="phone"
+                placeholder="Phone"
+                onChange={onChange}
+                value={state.phone}/>
+            <input
+                id="username"
+                name="username"
+                placeholder="Username"
+                onChange={onChange}
+                value={state.username}/>
+            <input
+                id="password"
+                name="password"
+                placeholder="Password"
+                onChange={onChange}
+                value={state.password}/>
+            <select
+                id="department"
+                name="department"
+                onChange={onChange}
+                value={state.department}>
+                <option default value="default" disabled>Select Department</option>
+                <option value="Unlisted">Unlisted</option>
+                <option value="moraga">Moraga</option>
+                <option value="orinda">Orinda</option>
             </select>
             <div style={{marginTop: "10px"}}>
-                <input className="consent-checkbox" type="checkbox" id="consent-agree"/>
-                <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{color:"389BFF", textDecoration:"none", cursor:"pointer"}}>terms and conditions</span></label>
+                <input
+                    className="consent-checkbox"
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    onChange={toggleCheck}
+                    value={consent}/>
+                <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{
+                    color: "389BFF",
+                    textDecoration: "none",
+                    cursor: "pointer"
+                }}>terms and conditions</span></label>
             </div>
-            <Link to="hubs"><FreeButton style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Sign Up</FreeButton></Link>
+            <FreeButton onClick={onSubmit} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>Sign Up</FreeButton>
         </FireRegisterContainer>
     );
 };

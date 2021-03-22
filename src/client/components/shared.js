@@ -121,7 +121,7 @@ export const FreeButton = styled.p`
   }
 `;
 
-// owner-register.js
+// homeuser-register.js
 export const OwnerRegisterContainer = styled.div`
     margin-top: 100px;
     display: flex;
@@ -179,7 +179,7 @@ export const NameRegisterContainer = styled.div`
 `;
 /********************** */
 
-// hubs.js
+// devices-table.js
 export const SprinklerTable = styled.table`
   width: 100%;
   text-align: center;

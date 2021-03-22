@@ -12,7 +12,7 @@ import {
   FormSelect,
 } from "./shared";
 import PropTypes from "prop-types";
-import { Register } from "./register";
+import { ChiefRegister } from "./chief-register";
 
 export const EditProfile = ({ history }) => {
   let [firstName, setFirstName] = useState("");
@@ -115,6 +115,6 @@ export const EditProfile = ({ history }) => {
   );
 };
 
-Register.propTypes = {
+ChiefRegister.propTypes = {
   history: PropTypes.object.isRequired,
 };
