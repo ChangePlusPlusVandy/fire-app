@@ -14,10 +14,9 @@ import {
     Checkbox, FireRegisterContainer,
 } from "./shared";
 import styled from "styled-components";
-import {validPassword, validUsername} from "../../shared";
 import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
 import {Link} from "react-router-dom";
-
+import {validPassword, validUsername, validFCEmail} from "../../shared/index";
 
 export const ChiefRegister = ({history}) => {
     let [state, setState] = useState({
@@ -30,6 +29,10 @@ export const ChiefRegister = ({history}) => {
         department: "",
     });
     let [consent, setConsent] = useState(false);
+    let [usernameError, setUsernameError] = useState();
+    let [passwordError, setPasswordError] = useState();
+    let [FCEmailError, setFCEmailError] = useState();
+    let [allValid, setAllValid] = useState(false);
     let [error, setError] = useState("");
     let [notify, setNotify] = useState("");
 
@@ -42,15 +45,17 @@ export const ChiefRegister = ({history}) => {
             [ev.target.name]: ev.target.value,
         });
         // Make sure the username is valid
-        if (ev.target.name === "username") {
-            let usernameInvalid = validUsername(ev.target.value);
-            if (usernameInvalid) setError(`Error: ${usernameInvalid.error}`);
-        }
+        if (ev.target.name === "username") setUsernameError(validUsername(ev.target.value))
         // Make sure password is valid
-        else if (ev.target.name === "password") {
-            let pwdInvalid = validPassword(ev.target.value);
-            if (pwdInvalid) setError(`Error: ${pwdInvalid.error}`);
-        }
+        else if (ev.target.name === "password") setPasswordError(validPassword(ev.target.value))
+        // Make sure email is valid
+        else if (ev.target.name === "email") setFCEmailError(validFCEmail(ev.target.value))
+
+        // check if all is valid
+        // if (state.first_name && state.last_name  && state.phone
+        //     && !usernameError && !passwordError && !FCEmailError) {
+        //     setAllValid(true);
+        // }
     };
 
     // change checkbox value
@@ -66,16 +71,20 @@ export const ChiefRegister = ({history}) => {
             window.alert("You to have agree to the terms and conditions.");
             return;
         }
-        let usernameInvalid = validUsername(state.username);
-        let pwdInvalid = validPassword(state.password);
-        // check if username and password are valid
-        if (usernameInvalid) {
-            setError(`Error: ${usernameInvalid.error}`);
-            console.log(usernameInvalid.error);
+
+        if (usernameError) {
+            window.alert(usernameError.error);
+            return;
         }
-        if (pwdInvalid) {
-            setError(`Error: ${pwdInvalid.error}`);
-            console.log(pwdInvalid.error);
+
+        if (passwordError) {
+            window.alert(passwordError.error);
+            return;
+        }
+
+        if (FCEmailError) {
+            window.alert(FCEmailError.error);
+            return;
         }
 
         // proceed only if there are no errors
@@ -83,7 +92,6 @@ export const ChiefRegister = ({history}) => {
             window.alert(error);
             return;
         }
-        console.log("jacchi");
         const res = await fetch("/v1/firechief", {
             method: "POST",
             body: JSON.stringify(state),

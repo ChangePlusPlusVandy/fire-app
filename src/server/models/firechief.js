@@ -18,12 +18,13 @@ const encryptAPI = (salt, API_Keys) =>
 
 
 const reservedNames = ["password"];
+const acceptedDomains = ["mofd.org"]
 
 let Firechief = new Schema({
     first_name: { type: String, default: "" },
     last_name: { type: String, default: "" },
-    email: { type: String, index: { unique: true }, unique: true },
-    phone: { type: String },
+    email: { type: String, required: true, index: { unique: true }, unique: true },
+    phone: { type: Number },
     username: { type: String, required: true, index: { unique: true }, unique: true },
     is_authorized: { type: Boolean, default: true },
     hash: { type: String },
@@ -45,6 +46,14 @@ Firechief.path("username").validate(function (value) {
     );
 }, "invalid username");
 
+Firechief.path("email").validate(function (value) {
+    if (!value) return false;
+    return (
+        /^[^@\s]+@[^@\s]+\.[^@\s]+$/i.test(value)
+        && acceptedDomains.indexOf(value.split('@').pop()) !== -1
+    );
+}, "invalid email");
+
 Firechief.virtual("password").set(function (password) {
     this.salt = makeSalt();
     this.hash = encryptPassword(this.salt, password);
@@ -54,19 +63,21 @@ Firechief.method("authenticate", function (plainText) {
     return encryptPassword(this.salt, plainText) === this.hash;
 });
 
-Firechief.virtual("API_Keys").set(function (API_Keys) {
-    this.hash = encrpytAPI(this.salt, API_Keys);
-});
-
-Firechief.method("authenticate_API", function (plainText) {
-    return encrpytAPI(this.salt, plainText) === this.hash;
-});
+// encrypt API
+// Firechief.virtual("API_Keys").set(function (API_Keys) {
+//     this.hash = encrpytAPI(this.salt, API_Keys);
+// });
+//
+// Firechief.method("authenticate_API", function (plainText) {
+//     return encrpytAPI(this.salt, plainText) === this.hash;
+// });
 
 Firechief.pre("save", function (next) {
     // Sanitize strings
     this.username = this.username.toLowerCase();
+    this.email = this.email.toLowerCase();
     this.email = this.email
-        ? this.email.toLowerCase()
+        ? this.email.replace(/<(?:.|\n)*?>/gm, "")
         : "";
     this.first_name = this.first_name
         ? this.first_name.replace(/<(?:.|\n)*?>/gm, "")
@@ -75,7 +86,7 @@ Firechief.pre("save", function (next) {
         ? this.last_name.replace(/<(?:.|\n)*?>/gm, "")
         : "";
     this.department = this.department ? this.department.replace(/<(?:.|\n)*?>/gm, "") : "";
-    this.added_date = Date.now();
+    this.create_date = Date.now();
     next();
 });
 
