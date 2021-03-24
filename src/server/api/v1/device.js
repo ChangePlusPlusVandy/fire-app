@@ -26,7 +26,7 @@ const firezones = [
     }
 ]
 // devices are assigned firezone 0 if not within maxDistance km of any firezone
-const maxDistance = 10;
+const maxDistance = 10000000000;
 
 
 module.exports = (app) => {

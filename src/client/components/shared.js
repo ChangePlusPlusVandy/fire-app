@@ -181,14 +181,24 @@ export const NameRegisterContainer = styled.div`
 
 // devices-table.js
 export const SprinklerTable = styled.table`
-  width: 100%;
-  text-align: center;
-  @media (max-width: 499px) {
-    & > tbody > tr > td:nth-of-type(2),
-    & > thead > tr > th:nth-of-type(2) {
-      display: none;
+  text-align: left;
+  width: 150%;
+  @media screen and (min-width: 200px) {
+    table {
+      width: 200%;
     }
   }
+  @media screen and (max-width: 200px) {
+    table {
+      width: 100%;
+    }
+  }
+  //@media (max-width: 499px) {
+  //  & > tbody > tr > td:nth-of-type(2),
+  //  & > thead > tr > th:nth-of-type(2) {
+  //    display: none;
+  //  }
+  //}
 `;
 
 
