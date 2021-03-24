@@ -9,20 +9,20 @@ module.exports = (app) => {
   /**
    * Log a user in
    *
-   * @param {req.body.username} Username of user trying to log in
+   * @param {req.body.email} Email of user trying to log in
    * @param {req.body.password} Password of user trying to log in
    * @return { 200, {username, primary_email} }
    */
   app.post("/v1/session", async (req, res) => {
     // Validate incoming request has username and password, if not return 400:'username and password are required'
     let schema = Joi.object().keys({
-      username: Joi.string().lowercase().required(),
+      email: Joi.string().required(),
       password: Joi.string().required(),
     });
     let data = await schema.validateAsync(req.body);
     try {
       // Search database for user
-      const user = await app.models.Firechief.findOne({ username: data.username });
+      const user = await app.models.Firechief.findOne({ email: data.email });
       // If not found, return 401:unauthorized
       if (!user) {
         res.status(401).send({ error: "unauthorized" });
@@ -32,11 +32,10 @@ module.exports = (app) => {
         // Regenerate session when signing in to prevent fixation
         req.session.regenerate(() => {
           req.session.user = user;
-          console.log(`Session.login success: ${req.session.user.username}`);
-          // If a match, return 201:{ username, primary_email }
+          console.log(`Session.login success: ${req.session.user.email}`);
+          // If a match, return 201:{ email }
           res.status(200).send({
-            username: user.username,
-            primary_email: user.primary_email,
+            email: user.email,
           });
         });
       } else {
