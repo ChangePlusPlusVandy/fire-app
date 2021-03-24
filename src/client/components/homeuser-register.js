@@ -65,7 +65,6 @@ export const HomeuserRegister = ({history}) => {
             // Notify users
             setNotify(`${state.first_name} registered.`);
             window.alert(`Successfully registered. Thank you for your participation!`);
-            history.push("/chief-login");
         } else {
             window.alert(`You entered an invalid API key.`);
             const err1 = await res1.json();

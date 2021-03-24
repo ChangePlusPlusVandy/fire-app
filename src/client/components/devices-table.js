@@ -20,12 +20,13 @@ import {Link} from "react-router-dom";
 import SprinklerMap from "./sprinkler-map";
 
 /****************************************************************************************/
-const SprinklerHub = ({device}) => {
+const SprinklerHub = ({ device }) => {
     console.log(device.status);
     return (
         <tr>
-            <td>{device.owner}</td>
+            <td>{device.owner_name}</td>
             <td>{device.firezone}</td>
+            <td>{device.owner_email}</td>
             <td>
                 {device.status === "" ? "" : device.status === "ONLINE" ? "🌐" : "👎"}
             </td>
@@ -60,7 +61,7 @@ SprinklerHeader.propTypes = {
 };
 /****************************************************************************************/
 
-export const DevicesTable = ({history}) => {
+export const DevicesTable = ({ props }) => {
     let [isLoaded, setIsLoaded] = useState(false);
     let [state, setState] = useState({
         devices: [
@@ -91,10 +92,10 @@ export const DevicesTable = ({history}) => {
             .catch((err) => console.log(err));
     };
 
-    // useEffect(() => {
-    //     fetchDevices().then(() => {
-    //     });
-    // }, [props]);
+    useEffect(() => {
+        fetchDevices().then(() => {
+        });
+    }, [props]);
 
     if (isLoaded) {
         const deviceList = state.devices.map((device, index) => {
@@ -109,13 +110,13 @@ export const DevicesTable = ({history}) => {
         return (
             <FireRegisterContainer>
                 <TitleLine>Fire Mitigation App</TitleLine>
-                <SprinklerHeader
-                    count={state.devices.length}
-                    toggleMap={() => {
-                        setIsMapOpen(!isMapOpen);
-                    }}
-                    isMapOpen={isMapOpen}
-                />
+                {/*<SprinklerHeader*/}
+                {/*    count={state.devices.length}*/}
+                {/*    toggleMap={() => {*/}
+                {/*        setIsMapOpen(!isMapOpen);*/}
+                {/*    }}*/}
+                {/*    isMapOpen={isMapOpen}*/}
+                {/*/>*/}
                 {isMapOpen ? (
                     <SprinklerMap devices={state.devices}/>
                 ) : (
@@ -134,7 +135,7 @@ export const DevicesTable = ({history}) => {
             </FireRegisterContainer>
         );
     } else {
-        return <p>Hello</p>
+        return <p>Loading...</p>
     }
 };
 
