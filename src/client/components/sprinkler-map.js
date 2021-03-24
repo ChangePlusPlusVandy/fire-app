@@ -9,7 +9,8 @@ import L from "leaflet";
 const styles = {
   width: "90vw",
   height: "calc(100vh - 80px)",
-  position: "absolute",
+  position: "center",
+  marginBottom: "10vh",
 };
 
 const Map = ({ devices }) => {

@@ -45,13 +45,13 @@ const SprinklerHeader = ({count, toggleMap, isMapOpen}) => {
                 Sprinkler Hubs ({count}
                 ):
             </h4>
-            <FormButton
-                id="submitBtn"
+            <FreeButton
+                id="viewButton"
                 style={{marginBottom: "1em"}}
                 onClick={toggleMap}
             >
                 {isMapOpen ? "View Table" : "View Map"}
-            </FormButton>
+            </FreeButton>
         </SprinklerHeaderBase>
     );
 };
@@ -92,6 +92,10 @@ export const DevicesTable = ({ props }) => {
             .catch((err) => console.log(err));
     };
 
+    const toggleMap = () => {
+        setIsMapOpen(!isMapOpen);
+    }
+
     useEffect(() => {
         fetchDevices().then(() => {
         });
@@ -110,6 +114,9 @@ export const DevicesTable = ({ props }) => {
         return (
             <FireRegisterContainer>
                 <TitleLine>Fire Mitigation App</TitleLine>
+                <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                    {isMapOpen ? "View Table" : "View Map"}
+                </FreeButton>
                 {/*<SprinklerHeader*/}
                 {/*    count={state.devices.length}*/}
                 {/*    toggleMap={() => {*/}
