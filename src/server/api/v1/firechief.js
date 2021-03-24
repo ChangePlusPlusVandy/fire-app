@@ -7,15 +7,11 @@ module.exports = (app) => {
     /**
      * Create a new firechief
      *
-     * @param {req.body.first_name} First name of the firechief - optional
-     * @param {req.body.last_name} Last name of the firechief - optional
-     * @param {req.body.city} City user lives in - optional
+     * @param {req.body.first_name} First name of the firechief
+     * @param {req.body.last_name} Last name of the firechief
      * @param {req.body.email} Email address of the user
      * @param {req.body.phone} Phone of the new firechief
      * @param {req.body.username} Display name of the new user
-
-     * @param {req.body.lat} Latitude of user's home
-     * @param {req.body.lng} Longitude of user's home
      * @param {req.body.password} Password for the user
      * @return {201, {username,email}} Return username and others
      */
@@ -24,10 +20,10 @@ module.exports = (app) => {
         let data;
         try {
             let schema = Joi.object().keys({
-                first_name: Joi.string().allow(""),
-                last_name: Joi.string().allow(""),
+                first_name: Joi.string(),
+                last_name: Joi.string(),
                 email: Joi.string().lowercase().email().required(),
-                phone: Joi.string().default(""),
+                phone: Joi.number().integer(),
                 username: Joi.string().lowercase().alphanum().min(3).max(32).required(),
                 password: Joi.string().min(8).required(),
                 department: Joi.string(),
@@ -35,6 +31,7 @@ module.exports = (app) => {
             data = await schema.validateAsync(req.body);
             data["controllable_firezones"] = [1, 2];
         } catch (err) {
+            console.log(err);
             const message = err.details[0].message;
             console.log(`Firechief.create validation failure: ${message}`);
             return res.status(400).send({ error: message });
@@ -61,8 +58,8 @@ module.exports = (app) => {
             if (err.code === 11000) {
                 if (err.message.indexOf("username_1") !== -1)
                     res.status(400).send({ error: "username already in use"  });
-                if (err.message.indexOf("primary_email_1") !== -1)
-                    res.status(400).send({ error: err.message });
+                if (err.message.indexOf("email_1") !== -1)
+                    res.status(400).send({ error: "email already in use" });
             }
             // Something else in the username failed
             else res.status(400).send({ error: "invalid username" });
