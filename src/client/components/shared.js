@@ -99,12 +99,36 @@ export const TableButton = styled.button`
   line-height: 2em;
   font-size: 0.8em;
 `;
-/************* ALEX'S NEW */
+
+export const Header = styled.header`
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #CB0000;
+  color: #ffffff;
+`;
+
 export const TitleLine = styled.h1`
-  color: #CB0000;
-  font-size: 56px;
-  text-align: center;
-  font-style: italic;
+  color: #ffffff;
+  font-size: 30px;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  padding-left: 20px;
+`;
+
+export const LogoutButton = styled.p`
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: Helvetica;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  padding-right: 20px;
 `;
 
 export const FreeButton = styled.p`
@@ -121,15 +145,31 @@ export const FreeButton = styled.p`
   }
 `;
 
-// homeuser-register.js
+export const PageContainer = styled.div`
+  //margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+export const DevicesPageContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+`;
+
 export const OwnerRegisterContainer = styled.div`
     margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 32%;
 
     & > input {
-        width: 64%;
+        width: 100%;
         height: 40px;
         padding-left: 16px;
         border: solid 1px #707070;
@@ -158,17 +198,17 @@ export const OwnerRegisterContainer = styled.div`
     & > a:hover {
       box-shadow:none;
     }
-
 `;
 
 export const NameRegisterContainer = styled.div`
-    width: 64%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
     & > input {
+      width: 50%;
         height: 40px;
         padding-left: 16px;
         border: solid 1px #707070;
@@ -177,40 +217,23 @@ export const NameRegisterContainer = styled.div`
         font-family: Helvetica;
     }
 `;
-/********************** */
 
-// devices-table.js
 export const SprinklerTable = styled.table`
+  margin-top: 50px;
   text-align: left;
-  width: 150%;
-  @media screen and (min-width: 200px) {
-    table {
-      width: 200%;
-    }
-  }
-  @media screen and (max-width: 200px) {
-    table {
-      width: 100%;
-    }
-  }
-  //@media (max-width: 499px) {
-  //  & > tbody > tr > td:nth-of-type(2),
-  //  & > thead > tr > th:nth-of-type(2) {
-  //    display: none;
-  //  }
-  //}
+  width: 100%;
 `;
 
-
-// register.js
+// chief-register.js
 export const FireRegisterContainer = styled.div`
   margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 20%;
 
   & > input {
-    width: 64%;
+    width: 100%;
     height: 40px;
     padding-left: 16px;
     border: solid 1px #707070;

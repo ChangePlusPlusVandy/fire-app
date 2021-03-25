@@ -3,18 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import {
-  ErrorMessage,
-  FormBase,
-  FormInput,
-  FormLabel,
-  FormButton,
-  ModalNotify,
-  FormSwitch,
-  FormSelect,
-  Checkbox, FireRegisterContainer, NameRegisterContainer, TitleLine, FreeButton, OwnerRegisterContainer,
-} from "./shared";
-import styled from "styled-components";
+import { FireRegisterContainer, PageContainer, Header, TitleLine, FreeButton, } from "./shared";
 import { validPassword, validFCEmail } from "../../shared";
 import {Link} from "react-router-dom";
 
@@ -70,8 +59,11 @@ export const ChiefLogin = ({ history }) => {
   };
 
   return (
-      <FireRegisterContainer>
-        <TitleLine>Fire Mitigation App</TitleLine>
+      <PageContainer>
+        <Header>
+          <TitleLine>Fire Mitigation App</TitleLine>
+        </Header>
+        <FireRegisterContainer>
           <input
               id="email"
               name="email"
@@ -88,9 +80,10 @@ export const ChiefLogin = ({ history }) => {
           />
           <FreeButton onClick={onSubmit} style={{backgroundColor:"#cb0000", marginTop: "18px"}}>Log In</FreeButton>
           <p style={{marginTop: "1px"}}>or</p>
-          <Link to="chief-register"><FreeButton style={{backgroundColor:"#b2b2b2", marginTop: "1px"}}>Sign Up As Fire Chief</FreeButton></Link>
+          <Link to="chief-register" style={{textDecoration: 'none'}}><FreeButton style={{backgroundColor:"#b2b2b2", marginTop: "1px"}}>Sign Up As Fire Chief</FreeButton></Link>
           <p style={{color: "#CB0000", fontWeight: "bold"}}>Forgot Password</p>
-      </FireRegisterContainer>
+        </FireRegisterContainer>
+      </PageContainer>
   );
 };
 

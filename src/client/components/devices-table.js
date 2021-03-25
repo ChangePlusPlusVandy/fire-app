@@ -2,22 +2,9 @@
 
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import {
-    ErrorMessage,
-    FormBase,
-    FormInput,
-    FormLabel,
-    FormButton,
-    ModalNotify,
-    FormSwitch,
-    FormSelect,
-    Checkbox, FireRegisterContainer, TableButton,
-} from "./shared";
-import styled from "styled-components";
-import {validPassword, validUsername} from "../../shared";
-import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer, SprinklerTable} from "./shared"
-import {Link} from "react-router-dom";
+import {PageContainer, Header, TitleLine, DevicesPageContainer, FreeButton, SprinklerTable, LogoutButton} from "./shared";
 import SprinklerMap from "./sprinkler-map";
+import {Logout} from "./logout";
 
 /****************************************************************************************/
 const SprinklerHub = ({ device }) => {
@@ -60,6 +47,22 @@ SprinklerHeader.propTypes = {
     count: PropTypes.number.isRequired,
 };
 /****************************************************************************************/
+
+const onSubmit = ({ history, logOut }) => {
+    useEffect(() => {
+        fetch("/v1/session", { method: "DELETE" }).then(() => {
+            logOut();
+            // Go to login page
+            history.push("/chief-login");
+        });
+    }, []);
+    return <></>;
+}
+
+onSubmit.propTypes = {
+    history: PropTypes.object.isRequired,
+    logOut: PropTypes.func.isRequired,
+};
 
 export const DevicesTable = ({ props }) => {
     let [isLoaded, setIsLoaded] = useState(false);
@@ -112,8 +115,12 @@ export const DevicesTable = ({ props }) => {
         });
 
         return (
-            <FireRegisterContainer>
-                <TitleLine>Fire Mitigation App</TitleLine>
+            <PageContainer>
+                <Header>
+                    <TitleLine>Fire Mitigation App</TitleLine>
+                    <LogoutButton onClick={onSubmit}>Logout</LogoutButton>
+                </Header>
+            <DevicesPageContainer>
                 <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                     {isMapOpen ? "View Table" : "View Map"}
                 </FreeButton>
@@ -139,16 +146,14 @@ export const DevicesTable = ({ props }) => {
                         <tbody>{deviceList}</tbody>
                     </SprinklerTable>
                 )}
-            </FireRegisterContainer>
+            </DevicesPageContainer>
+            </PageContainer>
         );
     } else {
         return <p>Loading...</p>
     }
 };
 
-DevicesTable.propTypes =
-    {
+DevicesTable.propTypes = {
         history: PropTypes.object.isRequired,
-    }
-
-
+}
