@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {PageContainer, Header, TitleLine, DevicesPageContainer, FreeButton, SprinklerTable, LogoutButton} from "./shared";
 import SprinklerMap from "./sprinkler-map";
-import {Logout} from "./logout";
+import {Link} from "react-router-dom";
 
 /****************************************************************************************/
 const SprinklerHub = ({ device }) => {
@@ -64,7 +64,7 @@ onSubmit.propTypes = {
     logOut: PropTypes.func.isRequired,
 };
 
-export const DevicesTable = ({ props }) => {
+export const DevicesTable = (props) => {
     let [isLoaded, setIsLoaded] = useState(false);
     let [state, setState] = useState({
         devices: [
@@ -118,19 +118,15 @@ export const DevicesTable = ({ props }) => {
             <PageContainer>
                 <Header>
                     <TitleLine>Fire Mitigation App</TitleLine>
-                    <LogoutButton onClick={onSubmit}>Logout</LogoutButton>
+                    <Link to="logout" style={{textDecoration: 'none'}}>
+                        <LogoutButton>Logout</LogoutButton>
+                    </Link>
                 </Header>
             <DevicesPageContainer>
                 <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                     {isMapOpen ? "View Table" : "View Map"}
                 </FreeButton>
-                {/*<SprinklerHeader*/}
-                {/*    count={state.devices.length}*/}
-                {/*    toggleMap={() => {*/}
-                {/*        setIsMapOpen(!isMapOpen);*/}
-                {/*    }}*/}
-                {/*    isMapOpen={isMapOpen}*/}
-                {/*/>*/}
+                    <p>count={state.devices.length}</p>
                 {isMapOpen ? (
                     <SprinklerMap devices={state.devices}/>
                 ) : (
@@ -155,5 +151,5 @@ export const DevicesTable = ({ props }) => {
 };
 
 DevicesTable.propTypes = {
-        history: PropTypes.object.isRequired,
+        history: PropTypes.object,
 }

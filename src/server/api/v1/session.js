@@ -33,8 +33,9 @@ module.exports = (app) => {
         req.session.regenerate(() => {
           req.session.user = user;
           console.log(`Session.login success: ${req.session.user.email}`);
-          // If a match, return 201:{ email }
+          // If a match, return 201:{ username, email }
           res.status(200).send({
+            username: user.username,
             email: user.email,
           });
         });

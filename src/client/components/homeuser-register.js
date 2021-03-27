@@ -9,7 +9,7 @@ import {
 import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
 import {Link} from "react-router-dom";
 
-export const HomeuserRegister = ({history}) => {
+export const HomeuserRegister = ({ history }) => {
     let [state, setState] = useState({
         first_name: "",
         last_name: "",

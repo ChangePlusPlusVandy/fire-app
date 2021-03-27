@@ -4,16 +4,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FireRegisterContainer, PageContainer, Header, TitleLine, FreeButton, } from "./shared";
-import { validPassword, validFCEmail } from "../../shared";
 import {Link} from "react-router-dom";
 
-export const ChiefLogin = ({ history }) => {
+export const ChiefLogin = (props) => {
   let [state, setState] = useState({
     email: "",
     password: "",
   });
   let [error, setError] = useState("");
-  let [notify, setNotify] = useState("");
 
   const onChange = (ev) => {
     setError("");
@@ -22,24 +20,11 @@ export const ChiefLogin = ({ history }) => {
       ...state,
       [ev.target.name]: ev.target.value,
     });
-    // Make sure the email is valid
-    if (ev.target.name === "email") {
-      let emailInvalid = validFCEmail(ev.target.value);
-      if (emailInvalid) setError(`Error: ${emailInvalid.error}`);
-    }
-    // Make sure password is valid
-    else if (ev.target.name === "password") {
-      let pwdInvalid = validPassword(ev.target.value);
-      if (pwdInvalid) setError(`Error: ${pwdInvalid.error}`);
-    }
   };
 
   const onSubmit = async (ev) => {
     ev.preventDefault();
-    // window.alert("Button pressed");
-    // Only proceed if there are no errors
-    if (error !== "") return;
-    const res = await fetch("/v1/session", {
+    let res = await fetch("/v1/session", {
       method: "POST",
       body: JSON.stringify(state),
       credentials: "include",
@@ -49,11 +34,12 @@ export const ChiefLogin = ({ history }) => {
     });
     if (res.ok) {
       // Credentials match, move on to next page
-      history.push("./devices-table")
+      let data = await res.json();
+      props.logIn(data.username);
+      props.history.push("./devices-table");
     } else {
       const err = await res.json();
       setError(err.error);
-      setNotify("Incorrect email or password.")
       window.alert("Incorrect email or password.");
     }
   };
@@ -90,4 +76,5 @@ export const ChiefLogin = ({ history }) => {
 
 ChiefLogin.propTypes = {
   history: PropTypes.object.isRequired,
+  logIn: PropTypes.func.isRequired,
 };
