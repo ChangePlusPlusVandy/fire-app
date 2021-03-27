@@ -1,6 +1,6 @@
 /* Copyright G. Hemingway, @2020 - All rights reserved */
-"use strict";
-
+// "use strict";
+//
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
@@ -9,7 +9,7 @@ export const Logout = ({ history, logOut }) => {
     fetch("/v1/session", { method: "DELETE" }).then(() => {
       logOut();
       // Go to login page
-      history.push("/login");
+      history.push("/chief-login");
     });
   }, []);
   return <></>;

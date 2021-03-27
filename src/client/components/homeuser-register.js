@@ -4,22 +4,12 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {
-    ErrorMessage,
-    FormBase,
-    FormInput,
-    FormLabel,
-    FormButton,
-    ModalNotify,
-    FormSwitch,
-    FormSelect,
-    Checkbox,
+    PageContainer, Header,
 } from "./shared";
-import styled from "styled-components";
-import {validPassword, validUsername} from "../../shared";
 import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
 import {Link} from "react-router-dom";
 
-export const HomeuserRegister = ({history}) => {
+export const HomeuserRegister = ({ history }) => {
     let [state, setState] = useState({
         first_name: "",
         last_name: "",
@@ -74,51 +64,57 @@ export const HomeuserRegister = ({history}) => {
     };
 
     return (
-        <OwnerRegisterContainer>
-            <TitleLine>Fire Mitigation App</TitleLine>
-            <NameRegisterContainer>
+        <PageContainer>
+            <Header>
+                <TitleLine>Fire Mitigation App</TitleLine>
+            </Header>
+            <OwnerRegisterContainer>
+                <NameRegisterContainer>
+                    <input
+                        id="first_name"
+                        name="first_name"
+                        placeholder="First Name"
+                        onChange={onChange}
+                        value={state.first_name}
+                    />
+                    <input
+                        id="last_name"
+                        name="last_name"
+                        placeholder="Last Name"
+                        onChange={onChange}
+                        value={state.last_name}
+                    />
+                </NameRegisterContainer>
                 <input
-                    id="first_name"
-                    name="first_name"
-                    placeholder="First Name"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone"
                     onChange={onChange}
-                    value={state.first_name}/>
+                    value={state.phone}/>
                 <input
-                    id="last_name"
-                    name="last_name"
-                    placeholder="Last Name"
+                    id="api_key"
+                    name="api_key"
+                    placeholder="Rachio API Key"
                     onChange={onChange}
-                    value={state.last_name}/>
-            </NameRegisterContainer>
-            <input
-                id="phone"
-                name="phone"
-                placeholder="Phone"
-                onChange={onChange}
-                value={state.phone}/>
-            <input
-                id="api_key"
-                name="api_key"
-                placeholder="Rachio API Key"
-                onChange={onChange}
-                value={state.api_key}/>
-            <div style={{marginTop: "10px"}}>
-                <input
-                    id="consent-agree"
-                    className="consent-checkbox"
-                    name="consent_agree"
-                    type="checkbox"
-                />
-                <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{
-                    color: "389BFF",
-                    textDecoration: "none",
-                    cursor: "pointer"
-                }}>terms and conditions</span></label>
-            </div>
-            <FreeButton onClick={onSubmit} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>Sign Up</FreeButton>
-            <Link to="owner-update" style={{backgroundColor: "#AFAFAF", marginTop: "80px"}}>Already Registered? Update
-                Rachio Info</Link>
-        </OwnerRegisterContainer>
+                    value={state.api_key}/>
+                <div style={{marginTop: "10px"}}>
+                    <input
+                        id="consent-agree"
+                        className="consent-checkbox"
+                        name="consent_agree"
+                        type="checkbox"
+                    />
+                    <label style={{marginLeft: "6px"}} htmlFor="consent-agree">I agree to the <span style={{
+                        color: "389BFF",
+                        textDecoration: "none",
+                        cursor: "pointer"
+                    }}>terms and conditions</span></label>
+                </div>
+                <FreeButton onClick={onSubmit} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>Sign Up</FreeButton>
+                {/*<FreeButton to="owner-update" style={{backgroundColor: "#AFAFAF", marginTop: "50px"}}>Already Registered? Update*/}
+                {/*    Rachio Info</FreeButton>*/}
+            </OwnerRegisterContainer>
+        </PageContainer>
     );
 }
 

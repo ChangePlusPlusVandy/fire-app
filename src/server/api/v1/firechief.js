@@ -87,14 +87,14 @@ module.exports = (app) => {
      * @param {req.params.username} Username of the firechief to query for
      * @return {200, {username, email, first_name, last_name, city, fire_district_code, longitude, latitue, is_fire_chief}}
      */
-    app.get("v1/firechief/:username", async (req, res) => {
+    app.get("/v1/firechief/:username", async (req, res) => {
         let firechief = await app.models.Firechief.findOne({
             username: req.params.username.toLowerCase(),
         }).exec();
-
         if (!firechief)
             res.status(404).send({ error: `unknown firechief: ${req.params.username}` });
         else {
+            console.log(firechief.first_name);
             res.status(200).send({
                 first_name: firechief.first_name,
                 last_name: firechief.last_name,
@@ -102,6 +102,7 @@ module.exports = (app) => {
                 phone: firechief.phone,
                 username: firechief.username,
                 department: firechief.department,
+                is_authorized: firechief.is_authorized,
             });
         }
     });

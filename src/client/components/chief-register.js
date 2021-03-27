@@ -2,20 +2,8 @@
 
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import {
-    ErrorMessage,
-    FormBase,
-    FormInput,
-    FormLabel,
-    FormButton,
-    ModalNotify,
-    FormSwitch,
-    FormSelect,
-    Checkbox, FireRegisterContainer,
-} from "./shared";
-import styled from "styled-components";
-import {TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer} from "./shared"
-import {Link} from "react-router-dom";
+import { FireRegisterContainer, OwnerRegisterContainer, PageContainer, Header, } from "./shared";
+import {TitleLine, FreeButton, NameRegisterContainer} from "./shared"
 import {validPassword, validUsername, validFCEmail} from "../../shared/index";
 
 export const ChiefRegister = ({history}) => {
@@ -111,8 +99,11 @@ export const ChiefRegister = ({history}) => {
     };
 
     return (
-        <FireRegisterContainer>
-            <TitleLine>Fire Mitigation App</TitleLine>
+        <PageContainer>
+            <Header>
+                <TitleLine>Fire Mitigation App</TitleLine>
+            </Header>
+        <OwnerRegisterContainer>
             <NameRegisterContainer>
                 <input
                     id="first_name"
@@ -176,7 +167,8 @@ export const ChiefRegister = ({history}) => {
                 }}>terms and conditions</span></label>
             </div>
             <FreeButton onClick={onSubmit} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>Sign Up</FreeButton>
-        </FireRegisterContainer>
+        </OwnerRegisterContainer>
+        </PageContainer>
     );
 };
 

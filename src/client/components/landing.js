@@ -3,8 +3,8 @@
 
 import React from "react";
 import styled from "styled-components";
-import { TitleLine } from "./shared"
 import { Link } from "react-router-dom";
+import { Header, PageContainer, TitleLine } from "./shared";
 
 const LandingContainer = styled.div`
   margin-top: 100px;
@@ -47,15 +47,19 @@ const LandingInfoContainer = styled.div`
 `;
 
 export const Landing = () => (
-  <LandingContainer>
-    <TitleLine>Fire Mitigation App</TitleLine>
-    <LandingButtonContainer>
-      <Link to="chief-login">Fire Chief</Link>
-      <Link to="homeuser-register">Home User</Link>
-    </LandingButtonContainer>
-    <LandingInfoContainer>
-      <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>
-      <p>This is the Fire Mitigation App. This app was built by Change++ at Vanderbilt University.</p>
-    </LandingInfoContainer>
-  </LandingContainer>
+    <PageContainer>
+        <Header>
+            <TitleLine>Fire Mitigation App</TitleLine>
+        </Header>
+        <LandingContainer>
+            <LandingButtonContainer>
+                <Link to="chief-login">Fire Chief</Link>
+                <Link to="homeuser-register">Home User</Link>
+            </LandingButtonContainer>
+            <LandingInfoContainer>
+                <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>
+                <p>This is the Fire Mitigation App. This app was built by Change++ at Vanderbilt University.</p>
+            </LandingInfoContainer>
+        </LandingContainer>
+    </PageContainer>
 );

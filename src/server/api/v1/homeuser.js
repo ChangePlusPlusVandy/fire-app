@@ -93,7 +93,7 @@ module.exports = (app) => {
      * @param {req.params.phone} Phone of the user to query for
      * @return {200, {first_name, last_name, phone}}
      */
-    app.get("/v1/user/:phone", async (req, res) => {
+    app.get("/v1/homeuser/:phone", async (req, res) => {
         let homeuser = await app.models.Homeuser.findOne({
             phone: req.params.phone(),
         }).exec();
