@@ -134,17 +134,17 @@ const startAllZones = async (api_key, id, device) => {
     return {};
 };
 
-// starts all devices for a firechief -- intiser
+// starts all devices in a firezone -- intiser
 const startAllDevices = async (devices, firezone) => {
-    devices.forEach(device => {
+    await Promise.all(devices.map(async device => {
         try {
             if (device.firezone === firezone) {
-                startAllZones(device.api_key, device.id, device)
+                await startAllZones(device.api_key, device.id, device)
             }
         } catch (err) {
             console.log(err);
         }
-    });
+    }));
     return {};
 }
 
@@ -189,4 +189,5 @@ module.exports = {
     concurrentGetDeviceDataAndSchedule: concurrentGetDeviceDataAndSchedule,
     startAllZones: startAllZones,
     closestFirezone: closestFirezone,
+    startAllDevices: startAllDevices,
 };

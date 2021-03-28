@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { FireRegisterContainer, OwnerRegisterContainer, PageContainer, Header, } from "./shared";
 import {TitleLine, FreeButton, NameRegisterContainer} from "./shared"
 import {validPassword, validUsername, validFCEmail} from "../../shared/index";
+import {Link} from "react-router-dom";
 
 export const ChiefRegister = ({history}) => {
     let [state, setState] = useState({
@@ -101,7 +102,7 @@ export const ChiefRegister = ({history}) => {
     return (
         <PageContainer>
             <Header>
-                <TitleLine>Fire Mitigation App</TitleLine>
+                <Link to="" style={{ textDecoration: 'none' }}><TitleLine>Fire Mitigation App</TitleLine></Link>
             </Header>
         <OwnerRegisterContainer>
             <NameRegisterContainer>

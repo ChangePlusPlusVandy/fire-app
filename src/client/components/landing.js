@@ -49,12 +49,12 @@ const LandingInfoContainer = styled.div`
 export const Landing = () => (
     <PageContainer>
         <Header>
-            <TitleLine>Fire Mitigation App</TitleLine>
+            <Link to="" style={{ textDecoration: 'none' }}><TitleLine>Fire Mitigation App</TitleLine></Link>
         </Header>
         <LandingContainer>
             <LandingButtonContainer>
-                <Link to="chief-login">Fire Chief</Link>
                 <Link to="homeuser-register">Home User</Link>
+                <Link to="chief-login">Fire Chief</Link>
             </LandingButtonContainer>
             <LandingInfoContainer>
                 <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>

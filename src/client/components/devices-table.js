@@ -2,12 +2,20 @@
 
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import {PageContainer, Header, TitleLine, DevicesPageContainer, FreeButton, SprinklerTable, LogoutButton} from "./shared";
+import {
+    PageContainer,
+    Header,
+    TitleLine,
+    DevicesPageContainer,
+    FreeButton,
+    SprinklerTable,
+    LogoutButton
+} from "./shared";
 import SprinklerMap from "./sprinkler-map";
 import {Link} from "react-router-dom";
 
 /****************************************************************************************/
-const SprinklerHub = ({ device }) => {
+const SprinklerHub = ({device}) => {
     console.log(device.status);
     return (
         <tr>
@@ -48,9 +56,9 @@ SprinklerHeader.propTypes = {
 };
 /****************************************************************************************/
 
-const onSubmit = ({ history, logOut }) => {
+const onSubmit = ({history, logOut}) => {
     useEffect(() => {
-        fetch("/v1/session", { method: "DELETE" }).then(() => {
+        fetch("/v1/session", {method: "DELETE"}).then(() => {
             logOut();
             // Go to login page
             history.push("/chief-login");
@@ -82,27 +90,111 @@ export const DevicesTable = (props) => {
             },
         ],
     });
-    const [isMapOpen, setIsMapOpen] = useState(false);
+    let [firechief, setFirechief] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        username: "",
+        department: "",
+        is_authorized: "",
+        controllable_firezones: [],
+    })
 
-    const fetchDevices = async () => {
-        fetch(`/v1/devices`)
+    const [isMapOpen, setIsMapOpen] = useState(false);
+    const [isFirezone1Active, setIsFirezone1Active] = useState(false);
+    const [isFirezone2Active, setIsFirezone2Active] = useState(false);
+    const [error, setError] = useState("");
+
+    const fetchFirechief = async (username) => {
+        await fetch(`/v1/firechief/${username}`)
             .then((res) => res.json())
-            .then((data) => {
-                console.log(data.devices);
-                setState({devices: data.devices});
-                setIsLoaded(true);
-            })
+            .then((data) => setFirechief(data))
             .catch((err) => console.log(err));
+        setIsLoaded(true);
+    }
+
+    useEffect(() => {
+        fetchFirechief(props.match.params.username)
+            .then(() => {
+            });
+    }, []);
+
+    // fetch devices from the passed in firezones
+    const fetchDevices = async () => {
+        let devices = [];
+        await Promise.all(firechief.controllable_firezones.map(async firezone => {
+            await fetch(`/v1/devices/${firezone}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    devices.push(...data.devices);
+                })
+                .catch((err) => console.log(err));
+        }));
+        setState({devices: devices});
     };
+
+    // useEffect(() => {
+    //     fetchDevices().then(() => {
+    //     });
+    // }, [props]);
+
+    const refreshDevices = () => {
+        fetchDevices().then(() => {
+        });
+    }
 
     const toggleMap = () => {
         setIsMapOpen(!isMapOpen);
     }
 
-    useEffect(() => {
-        fetchDevices().then(() => {
+    const activateFirezone1 = async (ev) => {
+        ev.preventDefault();
+        const zone1Devices = state.devices.filter(device => device.firezone === 1);
+        const firezone = 1;
+
+        const res = await fetch(`/v1/devices/startzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone1Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
         });
-    }, [props]);
+
+        if (res.ok) {
+            window.alert("Successfully activated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone1Active(!isFirezone1Active);
+    }
+
+    const activateFirezone2 = async (ev) => {
+        ev.preventDefault();
+        const zone1Devices = state.devices.filter(device => device.firezone === 2);
+        const firezone = 2
+
+        const res = await fetch(`/v1/devices/startzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone1Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        if (res.ok) {
+            window.alert("Successfully activated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone1Active(!isFirezone1Active);
+    }
 
     if (isLoaded) {
         const deviceList = state.devices.map((device, index) => {
@@ -117,32 +209,44 @@ export const DevicesTable = (props) => {
         return (
             <PageContainer>
                 <Header>
-                    <TitleLine>Fire Mitigation App</TitleLine>
-                    <Link to="logout" style={{textDecoration: 'none'}}>
+                    <Link to="" style={{textDecoration: 'none'}}><TitleLine>Fire Mitigation App</TitleLine></Link>
+                    <Link to="/logout" style={{textDecoration: 'none'}}>
                         <LogoutButton>Logout</LogoutButton>
                     </Link>
                 </Header>
-            <DevicesPageContainer>
-                <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                    {isMapOpen ? "View Table" : "View Map"}
-                </FreeButton>
-                    <p>count={state.devices.length}</p>
-                {isMapOpen ? (
-                    <SprinklerMap devices={state.devices}/>
-                ) : (
-                    <SprinklerTable>
-                        <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Firezone</td>
-                            <td>Contact</td>
-                            <td>Status</td>
-                        </tr>
-                        </thead>
-                        <tbody>{deviceList}</tbody>
-                    </SprinklerTable>
-                )}
-            </DevicesPageContainer>
+                <DevicesPageContainer>
+                    <p>Welcome, {firechief.first_name}</p>
+                    <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        Refresh Devices
+                    </FreeButton>
+                    <FreeButton
+                        onClick={activateFirezone1} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        Activate Firezone 1
+                    </FreeButton>
+                    <FreeButton onClick={activateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        Activate Firezone 2
+                    </FreeButton>
+
+                    <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        {isMapOpen ? "View Table" : "View Map"}
+                    </FreeButton>
+                    <p>Number of Devices={state.devices.length}</p>
+                    {isMapOpen ? (
+                        <SprinklerMap devices={state.devices}/>
+                    ) : (
+                        <SprinklerTable>
+                            <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Firezone</td>
+                                <td>Contact</td>
+                                <td>Status</td>
+                            </tr>
+                            </thead>
+                            <tbody>{deviceList}</tbody>
+                        </SprinklerTable>
+                    )}
+                </DevicesPageContainer>
             </PageContainer>
         );
     } else {
@@ -151,5 +255,7 @@ export const DevicesTable = (props) => {
 };
 
 DevicesTable.propTypes = {
-        history: PropTypes.object,
+    match: PropTypes.object,
+    history: PropTypes.object,
+    currentUser: PropTypes.string,
 }

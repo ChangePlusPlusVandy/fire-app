@@ -10,7 +10,8 @@ const {
     getCurrentScheduleDuration,
     concurrentGetDeviceDataAndSchedule,
     startAllZones,
-    closestFirezone
+    closestFirezone,
+    startAllDevices,
 } = require("../rachio");
 
 const firezones = [
@@ -26,7 +27,7 @@ const firezones = [
     }
 ]
 // devices are assigned firezone 0 if not within maxDistance km of any firezone
-const maxDistance = 10000000000;
+const maxDistance = 10;
 
 
 module.exports = (app) => {
@@ -92,12 +93,13 @@ module.exports = (app) => {
 
                 device["firezone"] = closestFirezone(item, firezones, maxDistance).number;
 
-                let matchedChiefs = await app.models.Firechief
-                    .find( { controllable_firezones: device.firezone } );
-                await Promise.all(matchedChiefs.map(async chief => {
-                    chief.controllable_devices.push(device.id);
-                    await chief.save();
-                }));
+                // obsolete - kept for syntax
+                // let matchedChiefs = await app.models.Firechief
+                //     .find( { controllable_firezones: device.firezone } );
+                // await Promise.all(matchedChiefs.map(async chief => {
+                //     chief.controllable_devices.push(device.id);
+                //     await chief.save();
+                // }));
 
                 devices.push(device);
             }));
@@ -152,6 +154,30 @@ module.exports = (app) => {
     });
 
     /**
+     * Returns all registered device hubs in the firezone with schedule and data
+     *
+     * @param {req.params.firezone} firezone to look up
+     * @return {201, {devices}} Returns array of sprinkler devices
+     */
+    app.get("/v1/devices/:firezone", async (req, res) => {
+        let devices;
+
+        try {
+            devices = await app.models.Device.find({firezone: req.params.firezone});
+
+            const devices_schedule_data = await concurrentGetDeviceDataAndSchedule(
+                devices
+            );
+
+            res.status(201).send({devices: devices_schedule_data});
+        } catch (err) {
+            console.log(err.message);
+            res.status(400).send({error: err.message});
+        }
+    });
+
+
+    /**
      * Starts a 24 hour sprinkler cycle for a device
      * @param {req.params.id} ID for the device to get info about
      * @param {req.body.device} Device values
@@ -174,4 +200,23 @@ module.exports = (app) => {
         }
     });
     // get current schedule for device
+
+    /**
+     * Starts a 24 hour sprinkler cycle for a device
+     * @param {req.params.firezone} firezone of the devices to activate
+     * @param {req.body.devices} array of device objects
+     * @return {201, {devices}} Returns updated device
+     */
+    app.put("/v1/devices/startzone/:firezone", async (req, res) => {
+        console.log("Starting Firezone " + req.params.firezone);
+        try {
+            await startAllDevices(req.body.devices, req.params.firezone);
+            res.status(200).send("Firezone 1 activated!");
+        } catch (err) {
+            console.log(err.message);
+            res
+                .status(400)
+                .send({error: `Error starting Firezone ${req.params.firezone}: ${err.message}`});
+        }
+    });
 };

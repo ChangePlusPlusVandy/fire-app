@@ -85,10 +85,17 @@ const MyApp = () => {
                 />
 
                 <Route
+                    path="/devices-table/:username"
+                    render={(p) => (
+                        <DevicesTable {...p} currentUser={state.username} logIn={logIn}/>
+                    )}
+                />
+
+                <Route
                     path="/chief-login"
                     render={(p) =>
                         loggedIn() && isAuthorized() ? (
-                            <Redirect to={`/devices-table`}/>
+                            <Redirect to={`/devices-table/${state.username}`}/>
                         ) : (
                             <ChiefLogin {...p} logIn={logIn}/>
                         )
@@ -104,11 +111,15 @@ const MyApp = () => {
                     path="/devices-table"
                     render={(p) => {
                         return loggedIn() && isAuthorized() ? (
-                            <DevicesTable/>
+                            <Redirect to={`/devices-table/${state.username}`}/>
                         ) : (
                             <ChiefLogin {...p} logIn={logIn}/>
                         );
                     }}
+                />
+
+                <Route
+                    path = "/devices/startzone/:firezone"
                 />
 
                 {/*<Route*/}
