@@ -32,10 +32,6 @@ let Firechief = new Schema({
     create_date: { type: Date },
     department: { type: String, default: ""},
     controllable_firezones: [ { type: Number } ],
-    controllable_devices: [{
-        type: String,
-        ref: 'Device'
-    }],
 });
 
 Firechief.path("username").validate(function (value) {

@@ -135,6 +135,7 @@ export const FreeButton = styled.p`
   padding: 14px 18px 14px 18px;
   cursor: pointer;
   border-radius: 15px;
+  text-align: center;
   color: white;
   font-weight: 600;
   box-shadow: 0px 3px 6px #00000029;

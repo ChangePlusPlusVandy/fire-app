@@ -47,7 +47,7 @@ export const ChiefLogin = (props) => {
   return (
       <PageContainer>
         <Header>
-          <TitleLine>Fire Mitigation App</TitleLine>
+          <Link to="" style={{ textDecoration: 'none' }}><TitleLine>Fire Mitigation App</TitleLine></Link>
         </Header>
         <FireRegisterContainer>
           <input

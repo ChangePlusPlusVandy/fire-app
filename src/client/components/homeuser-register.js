@@ -66,7 +66,7 @@ export const HomeuserRegister = ({ history }) => {
     return (
         <PageContainer>
             <Header>
-                <TitleLine>Fire Mitigation App</TitleLine>
+                <Link to="" style={{ "text-decoration": "none" }}><TitleLine>Fire Mitigation App</TitleLine></Link>
             </Header>
             <OwnerRegisterContainer>
                 <NameRegisterContainer>
