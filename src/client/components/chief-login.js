@@ -61,6 +61,7 @@ export const ChiefLogin = (props) => {
               id="password"
               name="password"
               placeholder="Password"
+              type="password"
               onChange={onChange}
               value={state.password}
           />

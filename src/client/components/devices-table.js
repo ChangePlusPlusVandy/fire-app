@@ -6,10 +6,11 @@ import {
     PageContainer,
     Header,
     TitleLine,
-    DevicesPageContainer,
     FreeButton,
     SprinklerTable,
-    LogoutButton
+    LogoutButton,
+    ChiefButtonsContainer,
+    ActivateOptionsContainer, FireZoneButtonsContainer
 } from "./shared";
 import SprinklerMap from "./sprinkler-map";
 import {Link} from "react-router-dom";
@@ -214,30 +215,44 @@ export const DevicesTable = (props) => {
                         <LogoutButton>Logout</LogoutButton>
                     </Link>
                 </Header>
-                <DevicesPageContainer>
-                    <p>Welcome, {firechief.first_name}</p>
-                    <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                        Refresh Devices
-                    </FreeButton>
-                    <FreeButton
-                        onClick={activateFirezone1} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                        Activate Firezone 1
-                    </FreeButton>
-                    <FreeButton onClick={activateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                        Activate Firezone 2
-                    </FreeButton>
-
-                    <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                        {isMapOpen ? "View Table" : "View Map"}
-                    </FreeButton>
-                    <p>Number of Devices={state.devices.length}</p>
+                    <ActivateOptionsContainer>
+                        <p>Welcome, {firechief.first_name}</p>
+                        <FireZoneButtonsContainer>
+                            <FreeButton
+                                onClick={activateFirezone1} style={{backgroundColor: "#CB0000", width: "150px", marginTop: "18px"}}>
+                                Activate Firezone 1
+                            </FreeButton>
+                            <FreeButton
+                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                                Deactivate Firezone 1
+                            </FreeButton>
+                        </FireZoneButtonsContainer>
+                        <FireZoneButtonsContainer>
+                            <FreeButton onClick={activateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                                Activate Firezone 2
+                            </FreeButton>
+                            <FreeButton
+                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                                Deactivate Firezone 2
+                            </FreeButton>
+                        </FireZoneButtonsContainer>
+                    </ActivateOptionsContainer>
+                    <p style={{width: "100%", marginLeft: "50px"}}>Number of Devices={state.devices.length}</p>
+                    <ChiefButtonsContainer>
+                        <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            Refresh Devices
+                        </FreeButton>
+                        <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            {isMapOpen ? "View Table" : "View Map"}
+                        </FreeButton>
+                    </ChiefButtonsContainer>
                     {isMapOpen ? (
                         <SprinklerMap devices={state.devices}/>
                     ) : (
                         <SprinklerTable>
                             <thead>
                             <tr>
-                                <td>Name</td>
+                                <td style={{width: "20%"}}>Name</td>
                                 <td>Firezone</td>
                                 <td>Contact</td>
                                 <td>Status</td>
@@ -246,7 +261,6 @@ export const DevicesTable = (props) => {
                             <tbody>{deviceList}</tbody>
                         </SprinklerTable>
                     )}
-                </DevicesPageContainer>
             </PageContainer>
         );
     } else {

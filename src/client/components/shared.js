@@ -140,6 +140,8 @@ export const FreeButton = styled.p`
   font-weight: 600;
   box-shadow: 0px 3px 6px #00000029;
   text-decoration: none;
+  margin-left: 10px;
+  margin-right: 10px;
 
   &:hover {
     box-shadow:none;
@@ -147,19 +149,44 @@ export const FreeButton = styled.p`
 `;
 
 export const PageContainer = styled.div`
-  //margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 `;
 
-export const DevicesPageContainer = styled.div`
-  margin-top: 100px;
+export const ActivateOptionsContainer = styled.div`
+  margin-top: 20px;
+  margin-bottom: 50px;
   display: flex;
+  align-items: center;
+  text-align: center;
   flex-direction: column;
+  width: 50%;
+`;
+
+export const FireZoneButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ChiefButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   width: 90%;
+  margin-right: 50px;
+`;
+
+export const SprinklerTable = styled.table`
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-bottom: 100px;
+  text-align: left;
+  width: 100%;
 `;
 
 export const OwnerRegisterContainer = styled.div`
@@ -217,12 +244,6 @@ export const NameRegisterContainer = styled.div`
         margin-bottom: 12px;
         font-family: Helvetica;
     }
-`;
-
-export const SprinklerTable = styled.table`
-  margin-top: 50px;
-  text-align: left;
-  width: 100%;
 `;
 
 // chief-register.js

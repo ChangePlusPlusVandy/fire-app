@@ -70,7 +70,7 @@ export const HomeuserRegister = ({ history }) => {
             </Header>
             <OwnerRegisterContainer>
                 <NameRegisterContainer>
-                    <input
+                    <input style={{marginRight: "10px"}}
                         id="first_name"
                         name="first_name"
                         placeholder="First Name"
