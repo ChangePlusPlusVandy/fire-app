@@ -151,6 +151,11 @@ export const DevicesTable = (props) => {
 
     const activateFirezone1 = async (ev) => {
         ev.preventDefault();
+
+        if (isFirezone1Active) {
+            return;
+        }
+
         const zone1Devices = state.devices.filter(device => device.firezone === 1);
         const firezone = 1;
 
@@ -170,17 +175,22 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone1Active(!isFirezone1Active);
+        setIsFirezone1Active(true);
     }
 
     const activateFirezone2 = async (ev) => {
         ev.preventDefault();
-        const zone1Devices = state.devices.filter(device => device.firezone === 2);
+
+        if (isFirezone2Active) {
+            return;
+        }
+
+        const zone2Devices = state.devices.filter(device => device.firezone === 2);
         const firezone = 2
 
         const res = await fetch(`/v1/devices/startzone/${firezone}`, {
             method: "PUT",
-            body: JSON.stringify({ devices: zone1Devices } ),
+            body: JSON.stringify({ devices: zone2Devices } ),
             credentials: "include",
             headers: {
                 "content-type": "application/json",
@@ -194,7 +204,65 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone1Active(!isFirezone1Active);
+        setIsFirezone2Active(true);
+    }
+
+    const deactivateFirezone1 = async (ev) => {
+        ev.preventDefault();
+
+        if (!isFirezone1Active) {
+            return;
+        }
+
+        const zone1Devices = state.devices.filter(device => device.firezone === 1);
+        const firezone = 1;
+
+        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone1Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        if (res.ok) {
+            window.alert("Successfully deactivated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone1Active(false);
+    }
+
+    const deactivateFirezone2 = async (ev) => {
+        ev.preventDefault();
+
+        if (!isFirezone2Active) {
+            return;
+        }
+
+        const zone2Devices = state.devices.filter(device => device.firezone === 2);
+        const firezone = 2;
+
+        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone2Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        if (res.ok) {
+            window.alert("Successfully deactivated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone2Active(false);
     }
 
     if (isLoaded) {
@@ -223,7 +291,7 @@ export const DevicesTable = (props) => {
                                 Activate Firezone 1
                             </FreeButton>
                             <FreeButton
-                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                                onClick={deactivateFirezone1} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                                 Deactivate Firezone 1
                             </FreeButton>
                         </FireZoneButtonsContainer>
@@ -232,7 +300,7 @@ export const DevicesTable = (props) => {
                                 Activate Firezone 2
                             </FreeButton>
                             <FreeButton
-                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                                onClick={deactivateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                                 Deactivate Firezone 2
                             </FreeButton>
                         </FireZoneButtonsContainer>
