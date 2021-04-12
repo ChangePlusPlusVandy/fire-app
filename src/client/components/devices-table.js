@@ -106,6 +106,7 @@ export const DevicesTable = (props) => {
     const [isFirezone1Active, setIsFirezone1Active] = useState(false);
     const [isFirezone2Active, setIsFirezone2Active] = useState(false);
     const [error, setError] = useState("");
+    const [isTableLoaded, setIsTableLoaded] = useState(false);
 
     const fetchFirechief = async (username) => {
         await fetch(`/v1/firechief/${username}`)
@@ -143,6 +144,7 @@ export const DevicesTable = (props) => {
     const refreshDevices = () => {
         fetchDevices().then(() => {
         });
+        setIsTableLoaded(true);
     }
 
     const toggleMap = () => {
@@ -207,6 +209,36 @@ export const DevicesTable = (props) => {
             );
         });
 
+        const RenderTable = () => {
+            if (isTableLoaded) {
+                return (
+                    <SprinklerTable>
+                        <thead>
+                        <tr>
+                            <td style={{width: "20%"}}>Name</td>
+                            <td>Firezone</td>
+                            <td>Contact</td>
+                            <td>Status</td>
+                        </tr>
+                        </thead>
+                        <tbody>{deviceList}</tbody>
+                    </SprinklerTable>
+                );
+            }
+            return <></>;
+        }
+
+        const RenderMapBtn = () => {
+            if (isTableLoaded) {
+                return (
+                    <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        {isMapOpen ? "View Table" : "View Map"}
+                    </FreeButton>
+                );
+            }
+            return <></>;
+        }
+
         return (
             <PageContainer>
                 <Header>
@@ -240,26 +272,14 @@ export const DevicesTable = (props) => {
                     <p style={{width: "100%", marginLeft: "50px"}}>Number of Devices={state.devices.length}</p>
                     <ChiefButtonsContainer>
                         <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                            Refresh Devices
+                            {isTableLoaded ? "Refresh Devices" : "Load Devices"}
                         </FreeButton>
-                        <FreeButton onClick={toggleMap} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                            {isMapOpen ? "View Table" : "View Map"}
-                        </FreeButton>
+                        <RenderMapBtn></RenderMapBtn>
                     </ChiefButtonsContainer>
                     {isMapOpen ? (
                         <SprinklerMap devices={state.devices}/>
                     ) : (
-                        <SprinklerTable>
-                            <thead>
-                            <tr>
-                                <td style={{width: "20%"}}>Name</td>
-                                <td>Firezone</td>
-                                <td>Contact</td>
-                                <td>Status</td>
-                            </tr>
-                            </thead>
-                            <tbody>{deviceList}</tbody>
-                        </SprinklerTable>
+                        <RenderTable></RenderTable>
                     )}
             </PageContainer>
         );

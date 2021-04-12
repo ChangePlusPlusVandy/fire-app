@@ -141,6 +141,7 @@ export const ChiefRegister = ({history}) => {
                 id="password"
                 name="password"
                 placeholder="Password"
+                type="password"
                 onChange={onChange}
                 value={state.password}/>
             <select
