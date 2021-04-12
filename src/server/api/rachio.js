@@ -108,7 +108,7 @@ const startAllZones = async (api_key, id, device) => {
             const z = {
                 id: zone.id,
                 sortOrder: zone.number,
-                duration: 1800,
+                duration: 60,
             };
             return z;
         }),
@@ -140,7 +140,7 @@ const stopDeviceWatering = async (api_key, id) => {
             `https://api.rach.io/1/public/device/stop_water`,
             {
                 method: "put",
-                body: id,
+                body: JSON.stringify({id: id}),
                 headers: {
                     Authorization: `Bearer ${api_key}`,
                     "Content-type": "application/json",
@@ -158,7 +158,7 @@ const stopDeviceWatering = async (api_key, id) => {
 const stopAllDevices = async (devices, firezone) => {
     await Promise.all(devices.map(async device => {
         try {
-            if (device.firezone == firezone) {
+            if (device.firezone.toString() == firezone) {
                 stopDeviceWatering(device.api_key, device.id);
             }
         } catch (err) {
@@ -171,7 +171,7 @@ const stopAllDevices = async (devices, firezone) => {
 const startAllDevices = async (devices, firezone) => {
     await Promise.all(devices.map(async device => {
         try {
-            if (device.firezone === firezone) {
+            if (device.firezone.toString() === firezone) {
                 startAllZones(device.api_key, device.id, device)
             }
         } catch (err) {
@@ -208,7 +208,7 @@ const closestFirezone = (device, firezones, maxDistance) => {
         firezone.latitude, firezone.longitude));
     const closest = Math.min(...distances);
     if (closest > maxDistance) {
-        return { number: 0 };
+        return {number: 0};
     }
     return firezones[distances.indexOf(closest)];
 }
