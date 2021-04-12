@@ -134,12 +134,45 @@ const startAllZones = async (api_key, id, device) => {
     return {};
 };
 
+const stopDeviceWatering = async (api_key, id) => {
+    try {
+        const res = await fetch(
+            `https://api.rach.io/1/public/device/stop_water`,
+            {
+                method: "put",
+                body: id,
+                headers: {
+                    Authorization: `Bearer ${api_key}`,
+                    "Content-type": "application/json",
+                    Accept: "application/json",
+                    "Accept-Charset": "utf-8",
+                },
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+    return {};
+};
+
+const stopAllDevices = async (devices, firezone) => {
+    await Promise.all(devices.map(async device => {
+        try {
+            if (device.firezone == firezone) {
+                stopDeviceWatering(device.api_key, device.id);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }))
+}
+
 // starts all devices in a firezone -- intiser
 const startAllDevices = async (devices, firezone) => {
     await Promise.all(devices.map(async device => {
         try {
             if (device.firezone === firezone) {
-                await startAllZones(device.api_key, device.id, device)
+                startAllZones(device.api_key, device.id, device)
             }
         } catch (err) {
             console.log(err);
@@ -190,4 +223,5 @@ module.exports = {
     startAllZones: startAllZones,
     closestFirezone: closestFirezone,
     startAllDevices: startAllDevices,
+    stopAllDevices: stopAllDevices,
 };
