@@ -17,18 +17,20 @@ const {
 
 const firezones = [
     {
+        name: "moraga",
         number: 1,
         latitude: 37.8349,
-        longitude: 122.1297,
+        longitude: -122.1297,
     },
     {
+        name: "orinda",
         number: 2,
         latitude: 37.8771,
-        longitude: 122.1797,
+        longitude: -122.1797,
     }
 ]
 // devices are assigned firezone 0 if not within maxDistance km of any firezone
-const maxDistance = 10;
+const maxDistance = 15;
 
 
 module.exports = (app) => {
