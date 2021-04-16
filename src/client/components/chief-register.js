@@ -24,6 +24,11 @@ export const ChiefRegister = ({history}) => {
     let [allValid, setAllValid] = useState(false);
     let [error, setError] = useState("");
     let [notify, setNotify] = useState("");
+    let [lengthText, setLengthText] = useState("✖ ");
+    let [numberText, setNumberText] = useState("✖ ");
+    let [letterText, setLetterText] = useState("✖ ");
+    let [charText, setCharText] = useState("✖ ");
+    let [capitalText, setCapitalText] = useState("✖ ");
 
     // When user makes changes, update the state
     const onChange = (ev) => {
@@ -36,7 +41,55 @@ export const ChiefRegister = ({history}) => {
         // Make sure the username is valid
         if (ev.target.name === "username") setUsernameError(validUsername(ev.target.value))
         // Make sure password is valid
-        else if (ev.target.name === "password") setPasswordError(validPassword(ev.target.value))
+        else if (ev.target.name === "password") {
+            const pass = ev.target.value;
+            if (pass.length >= 8) {
+                document.getElementById("length").style.color = "green";
+                document.getElementById("lengthSpan").style.color = "green";
+                setLengthText("✔ ");
+            } else {
+                document.getElementById("length").style.color = "red";
+                document.getElementById("lengthSpan").style.color = "red";
+                setLengthText("✖ ");
+            }
+            if (pass.match(/[0-9]/i)) {
+                document.getElementById("number").style.color = "green";
+                document.getElementById("numberSpan").style.color = "green";
+                setNumberText("✔ ");
+            } else {
+                document.getElementById("number").style.color = "red";
+                document.getElementById("numberSpan").style.color = "red";
+                setNumberText("✖ ");
+            }
+            if (pass.match(/[a-z]/)) {
+                document.getElementById("letter").style.color = "green";
+                document.getElementById("letterSpan").style.color = "green";
+                setLetterText("✔ ");
+            } else {
+                document.getElementById("letter").style.color = "red";
+                document.getElementById("letterSpan").style.color = "red";
+                setLetterText("✖ ");
+            }
+            if (pass.match(/\@|\!|\#|\$|\%|\^/i)) {
+                document.getElementById("char").style.color = "green";
+                document.getElementById("charSpan").style.color = "green";
+                setCharText("✔ ");
+            } else {
+                document.getElementById("char").style.color = "red";
+                document.getElementById("charSpan").style.color = "red";
+                setCharText("✖ ");
+            }
+            if (pass.match(/[A-Z]/)) {
+                document.getElementById("capital").style.color = "green";
+                document.getElementById("capitalSpan").style.color = "green";
+                setCapitalText("✔ ");
+            } else {
+                document.getElementById("capital").style.color = "red";
+                document.getElementById("capitalSpan").style.color = "red";
+                setCapitalText("✖ ");
+            }
+            setPasswordError(validPassword(ev.target.value));
+        }
         // Make sure email is valid
         else if (ev.target.name === "email") setFCEmailError(validFCEmail(ev.target.value))
 
@@ -99,6 +152,18 @@ export const ChiefRegister = ({history}) => {
         }
     };
 
+    const invalid = {
+        color: "red",
+    };
+
+    const onFocus = () => {
+        document.getElementById("message").style.display = "block";
+    };
+
+    const onBlur = () => {
+        document.getElementById("message").style.display = "none";
+    }
+
     return (
         <PageContainer>
             <Header>
@@ -143,7 +208,17 @@ export const ChiefRegister = ({history}) => {
                 placeholder="Password"
                 type="password"
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 value={state.password}/>
+                <div id="message" style={{display: "none"}}>
+                    <h3>Password must contain the following:</h3>
+                    <p id="letter" style={invalid}><span id="letterSpan">{letterText}</span>A <b>lowercase</b> letter</p>
+                    <p id="capital" style={invalid}><span id="capitalSpan">{capitalText}</span>A <b>capital (uppercase)</b> letter</p>
+                    <p id="number" style={invalid}><span id="numberSpan">{numberText}</span>A <b>number</b></p>
+                    <p id="char" style={invalid}><span id="charSpan">{charText}</span>A <b>special character</b></p>
+                    <p id="length" style={invalid}><span id="lengthSpan">{lengthText}</span>Minimum <b>8 characters</b></p>
+                </div>
             <select
                 id="department"
                 name="department"
