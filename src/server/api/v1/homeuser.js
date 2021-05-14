@@ -154,4 +154,20 @@ module.exports = (app) => {
             res.status(500).end();
         }
     });
+
+    /**
+     * Deletes the homeuser with the given person_id from the db
+     * @param {req.params.username} username of the homeuser to be deleted
+     * @return {200}
+     */
+    app.delete("/v1/homeuser/:person_id", async (req, res) => {
+        console.log("Deleting homeuser with person_id: " + req.params.person_id);
+        try {
+            app.models.Homeuser.deleteOne({person_id: req.params.person_id});
+            res.status(200).send("Deleted homeuser: " + req.params.person_id);
+        } catch (err) {
+            console.log(err.message);
+            res.status(400).send({error: `Error deleting homeuser ${req.params.person_id}: ${err.message}`});
+        }
+    });
 }

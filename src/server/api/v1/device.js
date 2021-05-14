@@ -241,4 +241,20 @@ module.exports = (app) => {
                 .send({error: `Error stopping Firezone ${req.params.firezone}: ${err.message}`});
         }
     });
+
+    /**
+     * Deletes the device with the given id from the db
+     * @param {req.params.id} id of the device to be deleted
+     * @return {200}
+     */
+    app.delete("/v1/devices/:id", async (req, res) => {
+        console.log("Deleting device with id: " + req.params.id );
+        try {
+            await app.models.Device.deleteOne({ id: req.params.id });
+            res.status(200).send("Deleted device with id: " + req.params.id);
+        } catch (err) {
+            console.log(err.message);
+            res.status(400).send({ error: `Error deleting device ${req.params.id}: ${err.message}`});
+        }
+    });
 };
