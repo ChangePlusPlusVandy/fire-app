@@ -68,7 +68,7 @@ export const ChiefLogin = (props) => {
           <FreeButton onClick={onSubmit} style={{backgroundColor:"#cb0000", marginTop: "18px"}}>Log In</FreeButton>
           <p style={{marginTop: "1px"}}>or</p>
           <Link to="chief-register" style={{textDecoration: 'none'}}><FreeButton style={{backgroundColor:"#b2b2b2", marginTop: "1px"}}>Sign Up As Fire Chief</FreeButton></Link>
-          <p style={{color: "#CB0000", fontWeight: "bold"}}>Forgot Password</p>
+          <a href="forgot-password" style={{color: "#CB0000", fontWeight: "bold", textDecoration: "none"}}>Forgot Password</a>
         </FireRegisterContainer>
       </PageContainer>
   );
