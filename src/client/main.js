@@ -10,6 +10,7 @@ import {HomeuserRegister} from "./components/homeuser-register";
 import {OwnerUpdate} from "./components/owner-update";
 import {ChiefLogin} from "./components/chief-login";
 import {ChiefRegister} from "./components/chief-register";
+import {ChiefAdmin} from "./components/chief-admin";
 import {ForgotPassword} from "./components/forgot-password";
 import {DevicesTable} from "./components/devices-table";
 
@@ -106,6 +107,11 @@ const MyApp = () => {
                 <Route
                     path="/chief-register"
                     component={ChiefRegister}
+                />
+
+                <Route
+                    path="/chief-admin"
+                    component={ChiefAdmin}
                 />
 
                 <Route

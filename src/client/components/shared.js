@@ -131,6 +131,15 @@ export const LogoutButton = styled.p`
   padding-right: 20px;
 `;
 
+export const AdminBtn = styled.button`
+  color: black;
+  background-color: transparent;
+  border: none;
+  width: 100px;
+  height: 30px;
+  text-align: left;
+`;
+
 export const FreeButton = styled.p`
   padding: 14px 18px 14px 18px;
   cursor: pointer;
@@ -146,6 +155,15 @@ export const FreeButton = styled.p`
   &:hover {
     box-shadow:none;
   }
+`;
+
+export const AdminButtons = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-left: 4%;
+  margin-bottom: 0px;
+  justify-content: left;
+  width: 100%;
 `;
 
 export const PageContainer = styled.div`
@@ -181,12 +199,14 @@ export const ChiefButtonsContainer = styled.div`
   margin-right: 50px;
 `;
 
-export const SprinklerTable = styled.table`
+export const Table = styled.table`
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 2%;
   margin-bottom: 100px;
+  margin-right: 2%;
   text-align: left;
-  width: 100%;
+  width: 96%;
+  border: solid darkgrey;
 `;
 
 export const OwnerRegisterContainer = styled.div`
