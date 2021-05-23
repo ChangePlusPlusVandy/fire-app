@@ -8,6 +8,11 @@ const Zone = require("./zone");
 
 /***************** Device Model *******************/
 
+const makeSalt = () => Math.round(new Date().valueOf() * Math.random()) + "";
+
+const encryptAPI = (salt, API) =>
+    crypto.createHmac("sha512", salt).update(API).digest("hex");
+
 let Device = new Schema({
   api_key: { type: String, required: true },
   owner_id: { type: String },
@@ -20,6 +25,8 @@ let Device = new Schema({
   create_date: { type: Date },
   zones: [Zone],
   firezone: { type: Number },
+  hash: { type: String },
+  salt: { type: String },
 });
 
 Device.pre("save", function (next) {
