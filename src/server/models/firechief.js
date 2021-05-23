@@ -13,12 +13,8 @@ const makeSalt = () => Math.round(new Date().valueOf() * Math.random()) + "";
 const encryptPassword = (salt, password) =>
     crypto.createHmac("sha512", salt).update(password).digest("hex");
 
-const encryptAPI = (salt, API_Keys) =>
-    crypto.createHmac("sha512", salt).update(API_Keys).digest("hex");
-
-
 const reservedNames = ["password"];
-const acceptedDomains = ["mofd.org"]
+const acceptedDomains = ["mofd.org"];
 
 let Firechief = new Schema({
     first_name: { type: String, default: "" },

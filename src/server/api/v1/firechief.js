@@ -171,4 +171,23 @@ module.exports = (app) => {
             res.status(400).send({error: `Error deleting firechief ${req.params.username}: ${err.message}`});
         }
     });
+
+    /**
+     * Sets authorization of firechief
+     * @param {req.params.username} username of the firechief to be deleted
+     * @return {200}
+     */
+    app.put("/v1/firechief/authorize/:username", async (req, res) => {
+        console.log("Updating authorization of firechief: " + req.params.username);
+        try {
+            const chief = await app.Models.Firechief.findOne({username: req.params.username});
+            let update = !chief.is_authorized;
+            chief.is_authorized = update;
+            await chief.save();
+            res.status(200).send("Firechief authorized: " + update);
+        } catch (err) {
+            console.log(err.message);
+            res.status(400).send({error: `Error changing authorization for firechief ${req.params.username}: ${err.message}`});
+        }
+    });
 };
