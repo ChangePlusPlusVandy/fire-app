@@ -153,6 +153,11 @@ export const DevicesTable = (props) => {
 
     const activateFirezone1 = async (ev) => {
         ev.preventDefault();
+
+        if (isFirezone1Active) {
+            return;
+        }
+
         const zone1Devices = state.devices.filter(device => device.firezone === 1);
         const firezone = 1;
 
@@ -172,17 +177,22 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone1Active(!isFirezone1Active);
+        setIsFirezone1Active(true);
     }
 
     const activateFirezone2 = async (ev) => {
         ev.preventDefault();
-        const zone1Devices = state.devices.filter(device => device.firezone === 2);
+
+        if (isFirezone2Active) {
+            return;
+        }
+
+        const zone2Devices = state.devices.filter(device => device.firezone === 2);
         const firezone = 2
 
         const res = await fetch(`/v1/devices/startzone/${firezone}`, {
             method: "PUT",
-            body: JSON.stringify({ devices: zone1Devices } ),
+            body: JSON.stringify({ devices: zone2Devices } ),
             credentials: "include",
             headers: {
                 "content-type": "application/json",
@@ -196,7 +206,65 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone1Active(!isFirezone1Active);
+        setIsFirezone2Active(true);
+    }
+
+    const deactivateFirezone1 = async (ev) => {
+        ev.preventDefault();
+
+        if (!isFirezone1Active) {
+            return;
+        }
+
+        const zone1Devices = state.devices.filter(device => device.firezone === 1);
+        const firezone = 1;
+
+        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone1Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        if (res.ok) {
+            window.alert("Successfully deactivated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone1Active(false);
+    }
+
+    const deactivateFirezone2 = async (ev) => {
+        ev.preventDefault();
+
+        if (!isFirezone2Active) {
+            return;
+        }
+
+        const zone2Devices = state.devices.filter(device => device.firezone === 2);
+        const firezone = 2;
+
+        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
+            method: "PUT",
+            body: JSON.stringify({ devices: zone2Devices } ),
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+
+        if (res.ok) {
+            window.alert("Successfully deactivated firezone 1");
+        } else {
+            const err = await res.json();
+            setError(err.error);
+            window.alert("Something went wrong");
+        }
+        setIsFirezone2Active(false);
     }
 
     if (isLoaded) {
@@ -247,40 +315,40 @@ export const DevicesTable = (props) => {
                         <LogoutButton>Logout</LogoutButton>
                     </Link>
                 </Header>
-                    <ActivateOptionsContainer>
-                        <p>Welcome, {firechief.first_name}</p>
-                        <FireZoneButtonsContainer>
-                            <FreeButton
-                                onClick={activateFirezone1} style={{backgroundColor: "#CB0000", width: "150px", marginTop: "18px"}}>
-                                Activate Firezone 1
-                            </FreeButton>
-                            <FreeButton
-                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                                Deactivate Firezone 1
-                            </FreeButton>
-                        </FireZoneButtonsContainer>
-                        <FireZoneButtonsContainer>
-                            <FreeButton onClick={activateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                                Activate Firezone 2
-                            </FreeButton>
-                            <FreeButton
-                                style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                                Deactivate Firezone 2
-                            </FreeButton>
-                        </FireZoneButtonsContainer>
-                    </ActivateOptionsContainer>
-                    <p style={{width: "100%", marginLeft: "50px"}}>Number of Devices={state.devices.length}</p>
-                    <ChiefButtonsContainer>
-                        <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
-                            {isTableLoaded ? "Refresh Devices" : "Load Devices"}
+                <ActivateOptionsContainer>
+                    <p>Welcome, {firechief.first_name}</p>
+                    <FireZoneButtonsContainer>
+                        <FreeButton
+                            onClick={activateFirezone1} style={{backgroundColor: "#CB0000", width: "150px", marginTop: "18px"}}>
+                            Activate Firezone 1
                         </FreeButton>
-                        <RenderMapBtn></RenderMapBtn>
-                    </ChiefButtonsContainer>
-                    {isMapOpen ? (
-                        <SprinklerMap devices={state.devices}/>
-                    ) : (
-                        <RenderTable></RenderTable>
-                    )}
+                        <FreeButton
+                            onClick={deactivateFirezone1} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            Deactivate Firezone 1
+                        </FreeButton>
+                    </FireZoneButtonsContainer>
+                    <FireZoneButtonsContainer>
+                        <FreeButton onClick={activateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            Activate Firezone 2
+                        </FreeButton>
+                        <FreeButton
+                            onClick={deactivateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            Deactivate Firezone 2
+                        </FreeButton>
+                    </FireZoneButtonsContainer>
+                </ActivateOptionsContainer>
+                <p style={{width: "100%", marginLeft: "50px"}}>Number of Devices={state.devices.length}</p>
+                <ChiefButtonsContainer>
+                    <FreeButton onClick={refreshDevices} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                        {isTableLoaded ? "Refresh Devices" : "Load Devices"}
+                    </FreeButton>
+                    <RenderMapBtn></RenderMapBtn>
+                </ChiefButtonsContainer>
+                {isMapOpen ? (
+                    <SprinklerMap devices={state.devices}/>
+                ) : (
+                    <RenderTable></RenderTable>
+                )}
             </PageContainer>
         );
     } else {

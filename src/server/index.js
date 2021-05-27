@@ -1,6 +1,5 @@
 /* Copyright G. Hemingway, 2020 - All rights reserved */
 "use strict";
-
 const path = require("path");
 const fs = require("fs");
 const http = require("http");
@@ -14,12 +13,6 @@ const envConfig = require("simple-env-config");
 
 const env = process.env.NODE_ENV ? process.env.NODE_ENV : "dev";
 
-const keyPath = path.join(__dirname, "../../server.key");
-const crtPath = path.join(__dirname, "../../server.crt");
-let options = {
-    key: fs.readFileSync(keyPath),
-    cert: fs.readFileSync(crtPath),
-};
 /**********************************************************************************************************/
 
 const setupServer = async () => {
@@ -72,7 +65,6 @@ const setupServer = async () => {
 
     // Import our routes
     require("./api")(app);
-
     // Give them the SPA base page
     app.get("*", (req, res) => {
         const user = req.session.user;
@@ -91,23 +83,10 @@ const setupServer = async () => {
             state: preloadedState,
         });
     });
-
-    // Listen for HTTPS requests
-    let server = https.createServer(options, app).listen(8443, () => {
-        console.log(`Secure Server listening on: ${server.address().port}`);
+    // Run the server itself
+    let server = app.listen(8080, () => {
+        console.log(` Listening on: ${server.address().port}`);
     });
-// Redirect HTTP to HTTPS
-    http
-        .createServer((req, res) => {
-            console.log("Here");
-            const location = `https://localhost:8443/`;
-            console.log(`Redirect to: ${location}`);
-            res.writeHead(302, {Location: location});
-            res.end();
-        })
-        .listen(8080, () => {
-            console.log(`Server listening on 8080 for HTTPS redirect`);
-        });
 };
 
 /**********************************************************************************************************/

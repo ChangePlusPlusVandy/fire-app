@@ -12,22 +12,25 @@ const {
     startAllZones,
     closestFirezone,
     startAllDevices,
+    stopAllDevices,
 } = require("../rachio");
 
 const firezones = [
     {
+        name: "moraga",
         number: 1,
         latitude: 37.8349,
-        longitude: 122.1297,
+        longitude: -122.1297,
     },
     {
+        name: "orinda",
         number: 2,
         latitude: 37.8771,
-        longitude: 122.1797,
+        longitude: -122.1797,
     }
 ]
 // devices are assigned firezone 0 if not within maxDistance km of any firezone
-const maxDistance = 10;
+const maxDistance = 15;
 
 
 module.exports = (app) => {
@@ -217,6 +220,25 @@ module.exports = (app) => {
             res
                 .status(400)
                 .send({error: `Error starting Firezone ${req.params.firezone}: ${err.message}`});
+        }
+    });
+
+    /**
+     * Stops all the devices in a firezone
+     * @param {req.params.firezone} firezone of the devices to activate
+     * @param {req.body.devices} array of device objects
+     * @return {201, {devices}} Returns updated device
+     */
+    app.put("/v1/devices/stopzone/:firezone", async (req, res) => {
+        console.log("Stopping Firezone " + req.params.firezone);
+        try {
+            await stopAllDevices(req.body.devices, req.params.firezone);
+            res.status(200).send("Firezone 1 stopped!");
+        } catch (err) {
+            console.log(err.message);
+            res
+                .status(400)
+                .send({error: `Error stopping Firezone ${req.params.firezone}: ${err.message}`});
         }
     });
 };

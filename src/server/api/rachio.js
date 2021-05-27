@@ -108,7 +108,7 @@ const startAllZones = async (api_key, id, device) => {
             const z = {
                 id: zone.id,
                 sortOrder: zone.number,
-                duration: 1800,
+                duration: 60,
             };
             return z;
         }),
@@ -134,12 +134,45 @@ const startAllZones = async (api_key, id, device) => {
     return {};
 };
 
+const stopDeviceWatering = async (api_key, id) => {
+    try {
+        const res = await fetch(
+            `https://api.rach.io/1/public/device/stop_water`,
+            {
+                method: "put",
+                body: JSON.stringify({id: id}),
+                headers: {
+                    Authorization: `Bearer ${api_key}`,
+                    "Content-type": "application/json",
+                    Accept: "application/json",
+                    "Accept-Charset": "utf-8",
+                },
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+    return {};
+};
+
+const stopAllDevices = async (devices, firezone) => {
+    await Promise.all(devices.map(async device => {
+        try {
+            if (device.firezone.toString() == firezone) {
+                stopDeviceWatering(device.api_key, device.id);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }))
+}
+
 // starts all devices in a firezone -- intiser
 const startAllDevices = async (devices, firezone) => {
     await Promise.all(devices.map(async device => {
         try {
-            if (device.firezone === firezone) {
-                await startAllZones(device.api_key, device.id, device)
+            if (device.firezone.toString() === firezone) {
+                startAllZones(device.api_key, device.id, device)
             }
         } catch (err) {
             console.log(err);
@@ -175,7 +208,7 @@ const closestFirezone = (device, firezones, maxDistance) => {
         firezone.latitude, firezone.longitude));
     const closest = Math.min(...distances);
     if (closest > maxDistance) {
-        return { number: 0 };
+        return {number: 0};
     }
     return firezones[distances.indexOf(closest)];
 }
@@ -190,4 +223,5 @@ module.exports = {
     startAllZones: startAllZones,
     closestFirezone: closestFirezone,
     startAllDevices: startAllDevices,
+    stopAllDevices: stopAllDevices,
 };
