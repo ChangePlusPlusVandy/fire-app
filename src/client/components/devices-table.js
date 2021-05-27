@@ -7,7 +7,7 @@ import {
     Header,
     TitleLine,
     FreeButton,
-    SprinklerTable,
+    Table,
     LogoutButton,
     ChiefButtonsContainer,
     ActivateOptionsContainer, FireZoneButtonsContainer
@@ -280,7 +280,7 @@ export const DevicesTable = (props) => {
         const RenderTable = () => {
             if (isTableLoaded) {
                 return (
-                    <SprinklerTable>
+                    <Table>
                         <thead>
                         <tr>
                             <td style={{width: "20%"}}>Name</td>
@@ -290,7 +290,7 @@ export const DevicesTable = (props) => {
                         </tr>
                         </thead>
                         <tbody>{deviceList}</tbody>
-                    </SprinklerTable>
+                    </Table>
                 );
             }
             return <></>;
