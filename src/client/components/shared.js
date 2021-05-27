@@ -15,14 +15,14 @@ const ErrorBase = styled.div`
 `;
 
 export const ErrorMessage = ({ msg = "", hide = false }) => {
-  return (
-    <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
-  );
+    return (
+        <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
+    );
 };
 
 ErrorMessage.propTypes = {
-  msg: PropTypes.string,
-  hide: PropTypes.bool,
+    msg: PropTypes.string,
+    hide: PropTypes.bool,
 };
 
 const NotifyBase = styled.div`
@@ -49,14 +49,14 @@ const NotifyBox = styled.div`
 `;
 
 export const ModalNotify = ({ msg = "", onAccept, ...props }) => {
-  return (
-    <NotifyBase {...props}>
-      <NotifyBox>
-        <p>{msg}</p>
-        {onAccept ? <FormButton onClick={onAccept}>Ok</FormButton> : null}
-      </NotifyBox>
-    </NotifyBase>
-  );
+    return (
+        <NotifyBase {...props}>
+            <NotifyBox>
+                <p>{msg}</p>
+                {onAccept ? <FormButton onClick={onAccept}>Ok</FormButton> : null}
+            </NotifyBox>
+        </NotifyBase>
+    );
 };
 
 export const FormBase = styled.form`
@@ -131,6 +131,15 @@ export const LogoutButton = styled.p`
   padding-right: 20px;
 `;
 
+export const AdminBtn = styled.button`
+  color: black;
+  background-color: transparent;
+  border: none;
+  width: 100px;
+  height: 30px;
+  text-align: left;
+`;
+
 export const FreeButton = styled.p`
   padding: 14px 18px 14px 18px;
   cursor: pointer;
@@ -146,6 +155,15 @@ export const FreeButton = styled.p`
   &:hover {
     box-shadow:none;
   }
+`;
+
+export const AdminButtons = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-left: 4%;
+  margin-bottom: 0px;
+  justify-content: left;
+  width: 100%;
 `;
 
 export const PageContainer = styled.div`
@@ -181,69 +199,71 @@ export const ChiefButtonsContainer = styled.div`
   margin-right: 50px;
 `;
 
-export const SprinklerTable = styled.table`
+export const Table = styled.table`
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 2%;
   margin-bottom: 100px;
+  margin-right: 2%;
   text-align: left;
-  width: 100%;
+  width: 96%;
+  border: solid darkgrey;
 `;
 
 export const OwnerRegisterContainer = styled.div`
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 32%;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32%;
 
-    & > input {
-        width: 100%;
-        height: 40px;
-        padding-left: 16px;
-        border: solid 1px #707070;
-        border-radius: 15px;
-        margin-bottom: 12px;
-        font-family: Helvetica;
-    }
+  & > input {
+    width: 100%;
+    height: 40px;
+    padding-left: 16px;
+    border: solid 1px #707070;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    font-family: Helvetica;
+  }
 
-    & > select {
-      padding-left: 12px;
-      height: 30px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-    }
+  & > select {
+    padding-left: 12px;
+    height: 30px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
 
-    & > a {
-      padding: 14px 18px 14px 18px;
-      cursor: pointer;
-      border-radius: 15px;
-      color: white;
-      font-weight: 600;
-      box-shadow: 0px 3px 6px #00000029;
-      text-decoration: none;
-    }
+  & > a {
+    padding: 14px 18px 14px 18px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0px 3px 6px #00000029;
+    text-decoration: none;
+  }
 
-    & > a:hover {
-      box-shadow:none;
-    }
+  & > a:hover {
+    box-shadow:none;
+  }
 `;
 
 export const NameRegisterContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    & > input {
-      width: 50%;
-        height: 40px;
-        padding-left: 16px;
-        border: solid 1px #707070;
-        border-radius: 15px;
-        margin-bottom: 12px;
-        font-family: Helvetica;
-    }
+  & > input {
+    width: 50%;
+    height: 40px;
+    padding-left: 16px;
+    border: solid 1px #707070;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    font-family: Helvetica;
+  }
 `;
 
 // chief-register.js
@@ -350,12 +370,12 @@ const Icon = styled.svg`
 `;
 
 export const Checkbox = ({ className, checked, onChange, ...props }) => (
-  <CheckboxContainer className={className} onClick={onChange}>
-    <HiddenCheckbox checked={checked} {...props} />
-    <StyledCheckbox checked={checked}>
-      <Icon viewBox="0 0 24 24">
-        <polyline points="20 6 9 17 4 12" />
-      </Icon>
-    </StyledCheckbox>
-  </CheckboxContainer>
+    <CheckboxContainer className={className} onClick={onChange}>
+        <HiddenCheckbox checked={checked} {...props} />
+        <StyledCheckbox checked={checked}>
+            <Icon viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+            </Icon>
+        </StyledCheckbox>
+    </CheckboxContainer>
 );

@@ -7,7 +7,7 @@ import {
     Header,
     TitleLine,
     FreeButton,
-    SprinklerTable,
+    Table,
     LogoutButton,
     ChiefButtonsContainer,
     ActivateOptionsContainer, FireZoneButtonsContainer
@@ -153,11 +153,6 @@ export const DevicesTable = (props) => {
 
     const activateFirezone1 = async (ev) => {
         ev.preventDefault();
-
-        if (isFirezone1Active) {
-            return;
-        }
-
         const zone1Devices = state.devices.filter(device => device.firezone === 1);
         const firezone = 1;
 
@@ -177,22 +172,17 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone1Active(true);
+        setIsFirezone1Active(!isFirezone1Active);
     }
 
     const activateFirezone2 = async (ev) => {
         ev.preventDefault();
-
-        if (isFirezone2Active) {
-            return;
-        }
-
-        const zone2Devices = state.devices.filter(device => device.firezone === 2);
+        const zone1Devices = state.devices.filter(device => device.firezone === 2);
         const firezone = 2
 
         const res = await fetch(`/v1/devices/startzone/${firezone}`, {
             method: "PUT",
-            body: JSON.stringify({ devices: zone2Devices } ),
+            body: JSON.stringify({ devices: zone1Devices } ),
             credentials: "include",
             headers: {
                 "content-type": "application/json",
@@ -206,65 +196,7 @@ export const DevicesTable = (props) => {
             setError(err.error);
             window.alert("Something went wrong");
         }
-        setIsFirezone2Active(true);
-    }
-
-    const deactivateFirezone1 = async (ev) => {
-        ev.preventDefault();
-
-        if (!isFirezone1Active) {
-            return;
-        }
-
-        const zone1Devices = state.devices.filter(device => device.firezone === 1);
-        const firezone = 1;
-
-        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
-            method: "PUT",
-            body: JSON.stringify({ devices: zone1Devices } ),
-            credentials: "include",
-            headers: {
-                "content-type": "application/json",
-            },
-        });
-
-        if (res.ok) {
-            window.alert("Successfully deactivated firezone 1");
-        } else {
-            const err = await res.json();
-            setError(err.error);
-            window.alert("Something went wrong");
-        }
-        setIsFirezone1Active(false);
-    }
-
-    const deactivateFirezone2 = async (ev) => {
-        ev.preventDefault();
-
-        if (!isFirezone2Active) {
-            return;
-        }
-
-        const zone2Devices = state.devices.filter(device => device.firezone === 2);
-        const firezone = 2;
-
-        const res = await fetch(`/v1/devices/stopzone/${firezone}`, {
-            method: "PUT",
-            body: JSON.stringify({ devices: zone2Devices } ),
-            credentials: "include",
-            headers: {
-                "content-type": "application/json",
-            },
-        });
-
-        if (res.ok) {
-            window.alert("Successfully deactivated firezone 1");
-        } else {
-            const err = await res.json();
-            setError(err.error);
-            window.alert("Something went wrong");
-        }
-        setIsFirezone2Active(false);
+        setIsFirezone1Active(!isFirezone1Active);
     }
 
     if (isLoaded) {
@@ -280,7 +212,7 @@ export const DevicesTable = (props) => {
         const RenderTable = () => {
             if (isTableLoaded) {
                 return (
-                    <SprinklerTable>
+                    <Table>
                         <thead>
                         <tr>
                             <td style={{width: "20%"}}>Name</td>
@@ -290,7 +222,7 @@ export const DevicesTable = (props) => {
                         </tr>
                         </thead>
                         <tbody>{deviceList}</tbody>
-                    </SprinklerTable>
+                    </Table>
                 );
             }
             return <></>;
@@ -323,7 +255,7 @@ export const DevicesTable = (props) => {
                             Activate Firezone 1
                         </FreeButton>
                         <FreeButton
-                            onClick={deactivateFirezone1} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                             Deactivate Firezone 1
                         </FreeButton>
                     </FireZoneButtonsContainer>
@@ -332,7 +264,7 @@ export const DevicesTable = (props) => {
                             Activate Firezone 2
                         </FreeButton>
                         <FreeButton
-                            onClick={deactivateFirezone2} style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
+                            style={{backgroundColor: "#CB0000", marginTop: "18px"}}>
                             Deactivate Firezone 2
                         </FreeButton>
                     </FireZoneButtonsContainer>

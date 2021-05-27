@@ -15,7 +15,7 @@ import {
 import {Link} from "react-router-dom";
 import {DevicesTable} from "./devices-table";
 
-export const ChiefAdmin = (props) => {
+export const AdminTables = (props) => {
     let [admin, setAdmin] = useState({
         first_name: "",
         last_name: "",
@@ -72,7 +72,7 @@ export const ChiefAdmin = (props) => {
     );
 };
 
-ChiefAdmin.propTypes = {
+AdminTables.propTypes = {
     match: PropTypes.object,
     history: PropTypes.object,
     currentUser: PropTypes.string,
