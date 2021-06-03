@@ -15,14 +15,14 @@ const ErrorBase = styled.div`
 `;
 
 export const ErrorMessage = ({ msg = "", hide = false }) => {
-    return (
-        <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
-    );
+  return (
+    <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
+  );
 };
 
 ErrorMessage.propTypes = {
-    msg: PropTypes.string,
-    hide: PropTypes.bool,
+  msg: PropTypes.string,
+  hide: PropTypes.bool,
 };
 
 const NotifyBase = styled.div`
@@ -49,14 +49,14 @@ const NotifyBox = styled.div`
 `;
 
 export const ModalNotify = ({ msg = "", onAccept, ...props }) => {
-    return (
-        <NotifyBase {...props}>
-            <NotifyBox>
-                <p>{msg}</p>
-                {onAccept ? <FormButton onClick={onAccept}>Ok</FormButton> : null}
-            </NotifyBox>
-        </NotifyBase>
-    );
+  return (
+    <NotifyBase {...props}>
+      <NotifyBox>
+        <p>{msg}</p>
+        {onAccept ? <FormButton onClick={onAccept}>Ok</FormButton> : null}
+      </NotifyBox>
+    </NotifyBase>
+  );
 };
 
 export const FormBase = styled.form`
@@ -106,7 +106,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #CB0000;
+  background: #cb0000;
   color: #ffffff;
 `;
 
@@ -153,7 +153,7 @@ export const FreeButton = styled.p`
   margin-right: 10px;
 
   &:hover {
-    box-shadow:none;
+    box-shadow: none;
   }
 `;
 
@@ -244,7 +244,7 @@ export const OwnerRegisterContainer = styled.div`
   }
 
   & > a:hover {
-    box-shadow:none;
+    box-shadow: none;
   }
 `;
 
@@ -370,12 +370,12 @@ const Icon = styled.svg`
 `;
 
 export const Checkbox = ({ className, checked, onChange, ...props }) => (
-    <CheckboxContainer className={className} onClick={onChange}>
-        <HiddenCheckbox checked={checked} {...props} />
-        <StyledCheckbox checked={checked}>
-            <Icon viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12" />
-            </Icon>
-        </StyledCheckbox>
-    </CheckboxContainer>
+  <CheckboxContainer className={className} onClick={onChange}>
+    <HiddenCheckbox checked={checked} {...props} />
+    <StyledCheckbox checked={checked}>
+      <Icon viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12" />
+      </Icon>
+    </StyledCheckbox>
+  </CheckboxContainer>
 );

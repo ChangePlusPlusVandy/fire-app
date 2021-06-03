@@ -16,27 +16,30 @@ import {
 } from "./shared";
 import styled from "styled-components";
 import { validPassword, validUsername } from "../../shared";
-import { TitleLine, FreeButton, OwnerRegisterContainer, NameRegisterContainer } from "./shared"
+import {
+  TitleLine,
+  FreeButton,
+  OwnerRegisterContainer,
+  NameRegisterContainer,
+} from "./shared";
 import { Link } from "react-router-dom";
 
 const IndependentInput = styled.input`
-    width: 64%;
-    height: 40px;
-    padding-left: 16px;
-    border: solid 1px #707070;
-    border-radius: 15px;
-    margin-bottom: 12px;
-    font-family: Helvetica;
+  width: 64%;
+  height: 40px;
+  padding-left: 16px;
+  border: solid 1px #707070;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  font-family: Helvetica;
 `;
 
 export const OwnerUpdate = ({ history }) => {
+  let [state, setState] = useState({
+    update_form: "",
+  });
 
-    let [state, setState] = useState({
-        update_form: ""
-    })
-    
-    
-    /*let [state, setState] = useState({
+  /*let [state, setState] = useState({
       username: "",
       first_name: "",
       last_name: "",
@@ -50,9 +53,9 @@ export const OwnerUpdate = ({ history }) => {
     });
     let [error, setError] = useState("");
     let [notify, setNotify] = useState("");
-  
+
     const getCoordinates = () => {};
-  
+
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(function (position) {
         setState({
@@ -66,14 +69,14 @@ export const OwnerUpdate = ({ history }) => {
       });
       document.getElementById("username").focus();
     }, []);
-  
+
     const toggleCheck = (ev) => {
       setState({
         ...state,
         is_fire_chief: !state.is_fire_chief,
       });
     };
-  
+
     const onChange = (ev) => {
       setError("");
       // Update from form and clear errors
@@ -93,10 +96,10 @@ export const OwnerUpdate = ({ history }) => {
       }
     };
   */
-    const onSubmit = async (ev) => {
-      ev.preventDefault();
-      console.log("Registering...");
-      /*// Only proceed if there are no errors
+  const onSubmit = async (ev) => {
+    ev.preventDefault();
+    console.log("Registering...");
+    /*// Only proceed if there are no errors
       if (error !== "") return;
       const res = await fetch("/v1/user", {
         method: "POST",
@@ -113,74 +116,95 @@ export const OwnerUpdate = ({ history }) => {
         const err = await res.json();
         setError(err.error);
       }*/
-    };
-    /*
+  };
+  /*
     const onAcceptRegister = () => {
       history.push("/login");
     };*/
 
-    const onChange = (ev) => {
-        setState({
-            update_form: ev.target.value
-        });
-    };
+  const onChange = (ev) => {
+    setState({
+      update_form: ev.target.value,
+    });
+  };
 
-    const renderUpdateForm = () => {
-        console.log(state.update_form);
-        switch (state.update_form) {
-            case "" :
-                return (
-                    <div style={{display:"none"}}></div>
-                );
-            case "permission":
-                return (
-                    <div>
-                        <div>To be completed.</div>
-                        <FreeButton onClick={onSubmit} style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Submit</FreeButton>
-                    </div>
-                );
-            case "location":
-                return (
-                    <div>
-                        <div style={{color:"#CB0000"}}>Just press Submit. We'll do the rest!</div>
-                        <FreeButton onClick={onSubmit} style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Submit</FreeButton>
-                    </div>
-                );
-            case "name":
-                return (
-                    <div>
-                        <NameRegisterContainer>
-                            <input placeholder="First"/>
-                            <input placeholder="Last"/>
-                        </NameRegisterContainer>
-                        <FreeButton onClick={onSubmit} style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Submit</FreeButton>
-                    </div>
-                );
-            case "email":
-                return (
-                    <div>
-                        <IndependentInput placeholder="Email"></IndependentInput>
-                        <FreeButton onClick={onSubmit} style={{backgroundColor:"#CB0000", marginTop: "18px"}}>Submit</FreeButton>
-                    </div>
-                );
-        }
-    };
-  
-    return (
-      <OwnerRegisterContainer>
-          <TitleLine>Fire Mitigation App</TitleLine>
-          <input placeholder="Rachio API Key"/>
-          <select onChange={onChange} id="update-select">
-              <option value="">What information are you updating today?</option>
-              <option value="permission">Sprinkler Permission</option>
-              <option value="location">Sprinkler Location</option>
-              <option value="name">User Name</option>
-              <option value="email">User Email</option>
-          </select>
-          {renderUpdateForm()}
-      </OwnerRegisterContainer>
-    );
-        {/*
+  const renderUpdateForm = () => {
+    console.log(state.update_form);
+    switch (state.update_form) {
+      case "":
+        return <div style={{ display: "none" }}></div>;
+      case "permission":
+        return (
+          <div>
+            <div>To be completed.</div>
+            <FreeButton
+              onClick={onSubmit}
+              style={{ backgroundColor: "#CB0000", marginTop: "18px" }}
+            >
+              Submit
+            </FreeButton>
+          </div>
+        );
+      case "location":
+        return (
+          <div>
+            <div style={{ color: "#CB0000" }}>
+              Just press Submit. We'll do the rest!
+            </div>
+            <FreeButton
+              onClick={onSubmit}
+              style={{ backgroundColor: "#CB0000", marginTop: "18px" }}
+            >
+              Submit
+            </FreeButton>
+          </div>
+        );
+      case "name":
+        return (
+          <div>
+            <NameRegisterContainer>
+              <input placeholder="First" />
+              <input placeholder="Last" />
+            </NameRegisterContainer>
+            <FreeButton
+              onClick={onSubmit}
+              style={{ backgroundColor: "#CB0000", marginTop: "18px" }}
+            >
+              Submit
+            </FreeButton>
+          </div>
+        );
+      case "email":
+        return (
+          <div>
+            <IndependentInput placeholder="Email"></IndependentInput>
+            <FreeButton
+              onClick={onSubmit}
+              style={{ backgroundColor: "#CB0000", marginTop: "18px" }}
+            >
+              Submit
+            </FreeButton>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <OwnerRegisterContainer>
+      <TitleLine>Fire Mitigation App</TitleLine>
+      <input placeholder="Rachio API Key" />
+      <select onChange={onChange} id="update-select">
+        <option value="">What information are you updating today?</option>
+        <option value="permission">Sprinkler Permission</option>
+        <option value="location">Sprinkler Location</option>
+        <option value="name">User Name</option>
+        <option value="email">User Email</option>
+      </select>
+      {renderUpdateForm()}
+    </OwnerRegisterContainer>
+  );
+  {
+    /*
       <div style={{ gridArea: "main" }}>
         <div>
           {notify !== "" ? (
@@ -216,7 +240,7 @@ export const OwnerUpdate = ({ history }) => {
               onChange={onChange}
               value={state.last_name}
             />
-  
+
             <FormLabel htmlFor="city">City:</FormLabel>
             <FormSelect id="city" name="city" onChange={onChange}>
               <option>Nashville</option>
@@ -225,7 +249,7 @@ export const OwnerUpdate = ({ history }) => {
               <option>West Chester</option>
               <option>NYC</option>
             </FormSelect>
-  
+
             <FormLabel htmlFor="primary_email">Email:</FormLabel>
             <FormInput
               id="primary_email"
@@ -287,10 +311,10 @@ export const OwnerUpdate = ({ history }) => {
             </FormButton>
           </FormBase>
         </div>
-            </div>*/}
-    
-  };
-  
-  OwnerUpdate.propTypes = {
-    history: PropTypes.object.isRequired,
-  };
+            </div>*/
+  }
+};
+
+OwnerUpdate.propTypes = {
+  history: PropTypes.object.isRequired,
+};

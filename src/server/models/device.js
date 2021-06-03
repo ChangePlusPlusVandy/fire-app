@@ -11,7 +11,7 @@ const Zone = require("./zone");
 const makeSalt = () => Math.round(new Date().valueOf() * Math.random()) + "";
 
 const encryptAPI = (salt, API) =>
-    crypto.createHmac("sha512", salt).update(API).digest("hex");
+  crypto.createHmac("sha512", salt).update(API).digest("hex");
 
 let Device = new Schema({
   api_key: { type: String, required: true },

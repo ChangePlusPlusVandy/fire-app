@@ -21,7 +21,7 @@ const LandingButtonContainer = styled.div`
   & > a {
     width: 120px;
     height: 120px;
-    background-color: #CB0000;
+    background-color: #cb0000;
     margin: 32px;
     margin-top: 12px;
     color: white;
@@ -36,7 +36,7 @@ const LandingButtonContainer = styled.div`
   }
 
   & > a:hover {
-    box-shadow:none;
+    box-shadow: none;
   }
 `;
 
@@ -47,19 +47,24 @@ const LandingInfoContainer = styled.div`
 `;
 
 export const Landing = () => (
-    <PageContainer>
-        <Header>
-            <Link to="" style={{ textDecoration: 'none' }}><TitleLine>Fire Mitigation App</TitleLine></Link>
-        </Header>
-        <LandingContainer>
-            <LandingButtonContainer>
-                <Link to="homeuser-register">Home User</Link>
-                <Link to="chief-login">Fire Chief</Link>
-            </LandingButtonContainer>
-            <LandingInfoContainer>
-                <h4 style={{marginBottom: "4px"}}>About the Fire Mitigation App</h4>
-                <p>This is the Fire Mitigation App. This app was built by Change++ at Vanderbilt University.</p>
-            </LandingInfoContainer>
-        </LandingContainer>
-    </PageContainer>
+  <PageContainer>
+    <Header>
+      <Link to="" style={{ textDecoration: "none" }}>
+        <TitleLine>Fire Mitigation App</TitleLine>
+      </Link>
+    </Header>
+    <LandingContainer>
+      <LandingButtonContainer>
+        <Link to="homeuser-register">Home User</Link>
+        <Link to="chief-login">Fire Chief</Link>
+      </LandingButtonContainer>
+      <LandingInfoContainer>
+        <h4 style={{ marginBottom: "4px" }}>About the Fire Mitigation App</h4>
+        <p>
+          This is the Fire Mitigation App. This app was built by Change++ at
+          Vanderbilt University.
+        </p>
+      </LandingInfoContainer>
+    </LandingContainer>
+  </PageContainer>
 );
